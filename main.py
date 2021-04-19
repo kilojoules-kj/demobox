@@ -2,6 +2,8 @@ import json
 import restjson_functions as rest
 import asyncio
 import graph_functions as graph
+import os
+import psutil
 
 myobj = rest.myclass()
 
@@ -127,3 +129,4 @@ while True:
     myobj3.uptime()
     myobj4.uptime()
     myobj.write_restful("uptime_total", myobj2.total())
+    print("current memeory usage: ", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
