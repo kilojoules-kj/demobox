@@ -82,7 +82,6 @@ async def dist_error():
         #print(data)
         for x in data:
             value = x["Value"]
-            print(value)
             if value > 600:
                 myobj.lightcontrol("towerlight_red")
                 myobj.write_restful("Motor", 0)

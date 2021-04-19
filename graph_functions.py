@@ -1,5 +1,6 @@
 import restjson_functions as rest
 import time
+import json
 
 myobj = rest.myclass()
 
@@ -34,7 +35,7 @@ class myclass():
                         self.counter = 0
                         self.sensor_uptime = self.sensor_end - self.sensor_start
                         myobj.write_restful(self.tag_send, self.sensor_uptime)
-        except (TypeError):
+        except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")            
 
     def total(self):
