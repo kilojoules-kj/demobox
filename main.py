@@ -25,80 +25,92 @@ async def on_function():
     try:
         data = myobj.receive_restful("Counter_channel1")
         data = data["Values"]
-        #print("on_function")
-        #print(data)
-        for x in data:
-            if x["Value"] > 0:
-                myobj.lightcontrol("towerlight_green")
-                myobj.write_restful("Motor", 1)
-                myobj.write_restful("Clear_counter1", 1)
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
+        return
+    except Exception:
+        print("generic error, please check")
+        return
+    for x in data:
+        if x["Value"] > 0:
+            myobj.lightcontrol("towerlight_green")
+            myobj.write_restful("Motor", 1)
+            myobj.write_restful("Clear_counter1", 1)
     
 async def off_function():
     try:
         data = myobj.receive_restful("Counter_channel0")
         data = data["Values"]
-        #print("off_function")
-        #print(data)
-        for x in data:
-            if x["Value"] > 0:
-                myobj.lightcontrol("towerlight_amber")
-                myobj.write_restful("Motor", 0)
-                myobj.write_restful("Clear_counter0", 1)
     except (TypeError, json.JSONDecodeError):
-        print("No or Wrong JSON data")           
+        print("No or Wrong JSON data")
+        return
+    except Exception:
+        print("generic error, please check")
+        return
+    for x in data:
+        if x["Value"] > 0:
+            myobj.lightcontrol("towerlight_amber")
+            myobj.write_restful("Motor", 0)
+            myobj.write_restful("Clear_counter0", 1)        
 
 def check_loop():
     while True:
         try:
             data = myobj.receive_restful("Counter_channel1")
             data = data["Values"]
-            #print(data)
-            for x in data:
-                if x["Value"] > 0:
-                    return
-                else:
-                    print("waiting")
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
-            break
+            return
+        except Exception:
+            print("generic error, please check")
+            return
+        for x in data:
+            if x["Value"] > 0:
+                return
+            else:
+                print("waiting")
         
 async def temp_error():
     try:
         data = myobj.receive_restful("temperature")
         data = data["Values"]
-        #print(data)
-        for x in data:
-            value = x["Value"]
-            if value > 29:
-                myobj.lightcontrol("towerlight_red")
-                myobj.write_restful("Motor", 0)
-                myobj.write_restful("Clear_counter0", 1)
-                myobj.write_restful("Clear_counter1", 1)
-                myobj.write_restful("Buzzer", 0)
-                check_loop()
-                myobj.write_restful("Buzzer", 1)
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
+        return
+    except Exception:
+        print("generic error, please check")
+        return
+    for x in data:
+        value = x["Value"]
+        if value > 29:
+            myobj.lightcontrol("towerlight_red")
+            myobj.write_restful("Motor", 0)
+            myobj.write_restful("Clear_counter0", 1)
+            myobj.write_restful("Clear_counter1", 1)
+            myobj.write_restful("Buzzer", 0)
+            check_loop()
+            myobj.write_restful("Buzzer", 1)
         
 async def dist_error():
     try:
         data = myobj.receive_restful("distance_sensor")
         data = data["Values"]
-        #print(data)
-        for x in data:
-            value = x["Value"]
-            if value > 600:
-                myobj.lightcontrol("towerlight_red")
-                myobj.write_restful("Motor", 0)
-                myobj.write_restful("Clear_counter0", 1)
-                myobj.write_restful("Clear_counter1", 1)
-                myobj.write_restful("Buzzer", 0)
-                check_loop()
-                myobj.write_restful("Buzzer", 1)
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
+        return
+    except Exception:
+        print("generic error, please check")
+        return
+    for x in data:
+        value = x["Value"]
+        if value > 600:
+            myobj.lightcontrol("towerlight_red")
+            myobj.write_restful("Motor", 0)
+            myobj.write_restful("Clear_counter0", 1)
+            myobj.write_restful("Clear_counter1", 1)
+            myobj.write_restful("Buzzer", 0)
+            check_loop()
+            myobj.write_restful("Buzzer", 1)
         
 loop = asyncio.get_event_loop()
 

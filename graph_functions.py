@@ -22,21 +22,25 @@ class myclass():
         try:
             data = myobj.receive_restful(self.tag_receive)
             data = data["Values"]
-            #print(data)
-            for x in data:
-                value = x["Value"]
-                if value >= 200:
-                    if self.counter != 1:
-                        self.sensor_start  = time.time()
-                        self.counter = 1
-                if self.counter == 1:
-                    if value <= 200:
-                        self.sensor_end = time.time()
-                        self.counter = 0
-                        self.sensor_uptime = self.sensor_end - self.sensor_start
-                        myobj.write_restful(self.tag_send, self.sensor_uptime)
         except (TypeError, json.JSONDecodeError):
-            print("No or Wrong JSON data")            
+            print("No or Wrong JSON data")
+            return
+        except Exception:
+            print("generic error, please check")
+            return
+        for x in data:
+            value = x["Value"]
+            if value >= 200:
+                if self.counter != 1:
+                    self.sensor_start  = time.time()
+                    self.counter = 1
+            if self.counter == 1:
+                if value <= 200:
+                    self.sensor_end = time.time()
+                    self.counter = 0
+                    self.sensor_uptime = self.sensor_end - self.sensor_start
+                    myobj.write_restful(self.tag_send, self.sensor_uptime)
+        
 
     def total(self):
         t_end = None
