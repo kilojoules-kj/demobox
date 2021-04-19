@@ -33,10 +33,13 @@ class myclass():
         #make a connection with requests
         try:
             response = requests.post('http://localhost/WaWebService/Json/GetTagValue/FirstProject', headers = self.header, data = body)
-            return response.json()
         except requests.exceptions.ConnectionError:
             print("Connection Error, please check WebAccess")
-        
+            return
+        except Exception:
+            print("generic error, please check")
+            return    
+        return response.json()
 
     def write_restful(self, name, value):
         body = json.dumps({
@@ -48,10 +51,14 @@ class myclass():
 
         try:
             response = requests.post('http://localhost/WaWebService/Json/SetTagValue/FirstProject', headers = self.header, data = body)
-            if response == 200:
-                print("Successful write REST")
         except requests.exceptions.ConnectionError:
             print("Connection Error, please check WebAccess")
+            return
+        except Exception:
+            print("generic error, please check")
+            return    
+        if response == 200:
+            print("Successful write REST")
 
 """ def write_file(): 
     #write data into json file
