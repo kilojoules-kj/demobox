@@ -5,6 +5,13 @@ import graph_functions as graph
 
 myobj = rest.myclass()
 
+""" class main_class():
+    def __init__(self):
+        myobj.write_restful("Clear_counter0", 1)
+        myobj.write_restful("Clear_counter1", 1)
+        myobj.lightcontrol("towerlight_amber")
+        myobj.write_restful("Motor", 0) """
+
 #start up
 myobj.write_restful("Clear_counter0", 1)
 myobj.write_restful("Clear_counter1", 1)
@@ -100,7 +107,10 @@ myobj3 = graph.myclass("s100_tag4", "downtime_amber")
 myobj4 = graph.myclass("s100_tag2", "downtime_red")
 
 while True:
-    loop.run_until_complete(asyncio.gather(on_function(), off_function(), temp_error(), dist_error(), keep_alive()))
+    try:
+        loop.run_until_complete(asyncio.gather(on_function(), off_function(), temp_error(), dist_error()))
+    except RuntimeError:
+        print("RuntimeError")
     myobj2.uptime()
     myobj3.uptime()
     myobj4.uptime()
