@@ -18,22 +18,24 @@ class myclass():
         self.sensor_uptime = None
 
     def uptime(self):
-        data = myobj.receive_restful(self.tag_receive)
-        data = data["Values"]
-        print(data)
-        for x in data:
-            value = x["Value"]
-            
-        if value >= 200:
-            if self.counter != 1:
-                self.sensor_start  = time.time()
-                self.counter = 1
-        if self.counter == 1:
-            if value <= 200:
-                self.sensor_end = time.time()
-                self.counter = 0
-                self.sensor_uptime = self.sensor_end - self.sensor_start
-                myobj.write_restful(self.tag_send, self.sensor_uptime)
+        try:
+            data = myobj.receive_restful(self.tag_receive)
+            data = data["Values"]
+            #print(data)
+            for x in data:
+                value = x["Value"]
+                if value >= 200:
+                    if self.counter != 1:
+                        self.sensor_start  = time.time()
+                        self.counter = 1
+                if self.counter == 1:
+                    if value <= 200:
+                        self.sensor_end = time.time()
+                        self.counter = 0
+                        self.sensor_uptime = self.sensor_end - self.sensor_start
+                        myobj.write_restful(self.tag_send, self.sensor_uptime)
+        except (TypeError):
+            print("No or Wrong JSON data")            
 
     def total(self):
         t_end = None
