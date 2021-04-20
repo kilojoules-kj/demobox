@@ -46,3 +46,21 @@ class myclass():
         t_end = None
         t_end = time.time()
         return(t_end-myclass.t_start)
+
+    def datetime(self):
+        datetime = []
+
+        datetime.append(time.gmtime()[0])
+        datetime.append("-")
+        datetime.append(time.gmtime()[1])
+        datetime.append("-")
+        datetime.append(time.gmtime()[2])
+        datetime.append(" ")
+        datetime.append(time.gmtime()[3])
+        datetime.append(":")
+        datetime.append(time.gmtime()[4])
+        datetime.append(":")
+        datetime.append(time.gmtime()[5])
+        datetimeStr = "".join(map(str, datetime))
+        
+        return datetimeStr
