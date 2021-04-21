@@ -60,6 +60,8 @@ class myclass():
         if response == 200:
             print("Successful write REST")
 
+
+
 """ def write_file(): 
     #write data into json file
     with open("data_file.json", "w") as write_file:
