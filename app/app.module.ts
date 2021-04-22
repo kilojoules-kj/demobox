@@ -11,21 +11,32 @@ import { TestComponentComponent } from './test-component/test-component.componen
 
 // UI UX stuff from material 
 import { MatSliderModule } from '@angular/material/slider';
+import {MatButtonModule} from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
+// Bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TemperatureComponent } from './temperature/temperature.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponentComponent
+    TestComponentComponent,
+    TemperatureComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    MatButtonModule,
     MatButtonToggleModule,
     HttpClientModule,
+    MatTabsModule,
+    MatCardModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

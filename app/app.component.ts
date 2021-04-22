@@ -10,30 +10,48 @@ import { ApiService } from './api.service';
 })
 
 export class AppComponent {
-  constructor(private http: HttpClient) {
+  // constructor(private http: HttpClient, public _name?:string) {
     
+  // }
+
+  constructor(private http: HttpClient) {
+
   }
 
-  ngOnInit() {
+  // get name() {
+  //   return this._name;
+  // }
 
+  // set name(value) {
+  //   this._name = value;
+  // }
+ 
+  test = () => {
+    console.log("test")
+  }
+
+  getTagValue = (tagname:string) => {
     let body = JSON.stringify({
-      "Result":{
-              "Ret":0,
-              "Total":2
-      },
-      "Projects":[{
-              "ID":3,
-              "Name":"Express",
-              "Description":"Express Project"
-      },
-      {
-              "ID":2,
-              "Name":"WaScada",
-              "Description":"WaScada Project"
+      "Tags":[{
+        "Name":tagname
       }]
-    });
+    })
 
     let obs = this.http.get('http://192.168.1.51/WaWebService/Json/ProjectList', {
+      headers: {'Content-Type': 'application/json', 'Authorization': 'YWRtaW46'}
+    });
+    obs.subscribe((response) => console.log(response))
+  }
+
+  setTagValue = (tagname:string, value:number) => {
+    let body = JSON.stringify({
+      "Tags":[{
+        "Name":tagname,
+        "Value":value
+      }]
+    });
+    console.log(body)
+    let obs = this.http.post('http://192.168.1.51/WaWebService/Json/SetTagValue/FirstProj', body, {
       headers: {'Content-Type': 'application/json', 'Authorization': 'YWRtaW46'}
     });
     obs.subscribe((response) => console.log(response))

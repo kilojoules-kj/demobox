@@ -1,10 +1,22 @@
 <p>
-  <mat-button-toggle-group>
-    <mat-button-toggle>
-      On
-    </mat-button-toggle>
-    <mat-button-toggle>
-      Off
-    </mat-button-toggle>
-  </mat-button-toggle-group>
+  <button mat-raised-button color="primary" (click)="getTagValue('s100_tag5')" >Basic</button>
+  <mat-tab-group>
+    <mat-tab label="Overview">
+      <mat-card>
+        <mat-button-toggle-group>
+          <mat-button-toggle (click)="setTagValue('Motor', 1)" >
+            On
+          </mat-button-toggle>
+          <mat-button-toggle (click)="setTagValue('Motor', 0)" >
+            Off
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-card>
+      <mat-card>
+        {{getTagValue('Motor')}}
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Controls"> Controls </mat-tab>
+    <mat-tab label="Credits"> Credits </mat-tab>
+  </mat-tab-group>
 </p>
