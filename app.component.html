@@ -1,0 +1,53 @@
+<div id="navbar">
+  <button mat-raised-button color="primary" (click)="getTagValue('s100_tag5')">Home</button>
+</div>
+<div id="body">
+  <p style="font-weight: bold; font-family:Arial, sans-serif; font-size:x-large;">DASHBOARD</p>
+  <div class="row">
+    <div class="container" style="height: max-content; margin-top: 20px;">
+      <div class="card" style="width: 40%; justify-content: center;">
+        <h4 style="font-size: xx-large; letter-spacing: 1px;">Motor Control</h4>
+        <p>On and Off</p>
+        <mat-button-toggle-group style="justify-content: center;">
+          <mat-button-toggle (click)="setTagValue('Motor', 1)">
+            On
+          </mat-button-toggle>
+          <mat-button-toggle (click)="setTagValue('Motor', 0)">
+            Off
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="card" style="width: 25%;">
+        {{x}}
+      </div>
+      <div class="card" style="width: 25%;">
+        yes
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="container" style="height: max-content;">
+      <div class="card" style="width: 61.5%; height: 350px;">
+        yes
+      </div>
+      <div class="card" style="width: 30%; height: 350px;">
+        yes
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container" style="height: max-content;">
+      <div class="card" style="width: 30%; height: 250px;">
+        yes
+      </div>
+      <div class="card" style="width: 30%; height: 250px;">
+        yes
+      </div>
+      <div class="card" style="width: 30%; height: 250px;">
+        yes
+      </div>
+    </div>
+  </div>
+</div>
