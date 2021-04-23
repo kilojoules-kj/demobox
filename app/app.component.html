@@ -1,22 +1,39 @@
 <p>
-  <button mat-raised-button color="primary" (click)="getTagValue('s100_tag5')" >Basic</button>
-  <mat-tab-group>
-    <mat-tab label="Overview">
-      <mat-card>
-        <mat-button-toggle-group>
-          <mat-button-toggle (click)="setTagValue('Motor', 1)" >
-            On
-          </mat-button-toggle>
-          <mat-button-toggle (click)="setTagValue('Motor', 0)" >
-            Off
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </mat-card>
-      <mat-card>
-        {{getTagValue('Motor')}}
-      </mat-card>
-    </mat-tab>
-    <mat-tab label="Controls"> Controls </mat-tab>
-    <mat-tab label="Credits"> Credits </mat-tab>
-  </mat-tab-group>
-</p>
+    <mat-button-toggle-group>
+      <mat-button-toggle>
+        On
+      </mat-button-toggle>
+      <mat-button-toggle>
+        Off
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </p>
+
+<!--progress bar for temperature,need to combine it with a thermometer picture-->
+<mat-progress-bar mode="determinate" value="25"></mat-progress-bar>
+  
+
+<!--<mat-slider
+  thumbLabel
+  [displayWith]="formatLabel"
+  tickInterval="100"
+  step="100"
+  min="0"
+  max="1000"
+  aria-label="units"></mat-slider> -->
+
+  <!--thermometer image-->
+  <img src="assets/img/temperature.jpeg" class="image">
+
+  <!--motor off image-->
+  <img src="assets/img/motorOff.jpeg" class="image1">
+
+   <!--motor on image-->
+   <img src="assets/img/motorSpin.gif" class="image2">
+
+
+
+
+  
+ 
+
