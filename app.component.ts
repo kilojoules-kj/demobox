@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ApiService } from './api.service';
-
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-root',
@@ -33,13 +33,20 @@ export class AppComponent {
   public buttonName:any = 'On';
   
   x: any;
+  override_dist_value!: number;
 
   ngOnInit() {
     this.myFunction;
   }
 
+  myFunction2 = setInterval(() => {this.somefunction(this.override_dist_value)}, 1000)
+  somefunction = (value: number) => {
+    if (value > 600) {
+      this.setTagValue("distance_sensor", 999)
+    }
+  }
+
   myFunction = setInterval(() => {this.getTagValue("s100_tag2")}, 3000);
-    
   JsonValues = (json:any) => {
     let res:any = json["Values"]["0"]["Value"]  
     return res;

@@ -31,31 +31,32 @@
         </p>
       </div>
       <div class="card" style="width: 25%;">
-        {{x}}
+        <!-- {{x}} -->
       </div>
     </div>
   </div>
   
   <div class="row">
     <div class="container" style="height: max-content;">
-      <div class="card" style="width: 61.5%; height: 350px;">
-        <!--thermometer image-->
-        <img src="assets/img/thermometer.jpg" class="image">
-        <!--progress bar for temperature,need to combine it with a thermometer picture-->
-        <mat-progress-bar mode="determinate" value="getTagValue('temperature')"></mat-progress-bar>
-      </div>
-      <div class="card" style="width: 30%; height: 350px;">
+      <div class="card" style="width: 61.3%; height: 350px; background-color: blanchedalmond; color: #2d353c;">
+        <h4 style="font-size: xx-large; letter-spacing: 1px; margin-top: 20%;">Simulate Distance Sensor</h4>
         <!--to stimualte error using distance sensor-->
         <mat-slider
           thumbLabel
-          color="primary"
+          color= "primary"
           tickInterval="100"
           step="1"
           min="0"
-          max="1500"
+          max="1000"
           aria-label="units"
-          value="setTagValue('distance_sensor')">
+          value={{override_dist_value}}>
         </mat-slider>
+      </div>
+      <div class="card" style="width: 30%; height: 350px; background-color: blanchedalmond; color:#2d353c; display: flex;">
+        <!--thermometer image-->
+        <!-- <img src="assets/img/thermometer.jpg" class="image"> -->
+        <!--progress bar for temperature,need to combine it with a thermometer picture-->
+        <mat-progress-bar mode="determinate" value=30></mat-progress-bar>
       </div>
     </div>
   </div>
@@ -73,12 +74,14 @@
       </div>
     </div>
   </div>
+
+  <!--motor on off function-->
+  <ng-container *ngIf="Off" id="bt2">
+    <img src="assets/img/motorOff.jpeg" class="image1">
+  </ng-container>
+  <ng-container *ngIf="On" id="bt1" >
+      <img src="assets/img/motorSpin.gif" class="image2">
+  </ng-container>
+
 </div>
 
-<!--motor on off function-->
-<ng-container *ngIf="Off" id="bt2">
-  <img src="assets/img/motorOff.jpeg" class="image1">
-</ng-container>
-<ng-container *ngIf="On" id="bt1" >
-    <img src="assets/img/motorSpin.gif" class="image2">
-</ng-container>

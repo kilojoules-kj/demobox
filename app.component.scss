@@ -8,20 +8,20 @@
     padding-bottom: 100px;
     z-index: -1;
     text-align: center;
-}
-
-/* Header/Logo Title */
-#header {
+  }
+  
+  /* Header/Logo Title */
+  #header {
     padding: 10px;
     text-align: center; 
     font-size: 30px;
-}
-
-#footer {
+  }
+  
+  #footer {
     margin-top: auto;
-}
-
-#navbar {
+  }
+  
+  #navbar {
     width: 100%;
     height: 8%;
     text-align: left;
@@ -31,9 +31,9 @@
     z-index: 1;
     display: flex;
     border-bottom: 2px solid black;
-}
-
-.row {
+  }
+  
+  .row {
     background-color: #dee2e6;
     width: 95%;
     display: flex;
@@ -42,9 +42,9 @@
     padding-right: 100px;
     padding-bottom: 20px;
     margin: auto;
-}
-
-.bigcontainer {
+  }
+  
+  .bigcontainer {
     padding: 20px 20px;
     margin: auto;
     width: 80%;
@@ -52,9 +52,9 @@
     background-color: #ffffff;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     border-radius: 10px; /* 5px rounded corners */
-}
-
-.card {
+  }
+  
+  .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
     background: #2d353c;
     color: blanchedalmond;
@@ -65,23 +65,23 @@
     margin-left: 15px;
     margin-left: 15px;
     
-}
-
-.card:hover {
+  }
+  
+  .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
+  }
+  
+  .container {
     justify-content: center;
     display: flex;
     //flex-wrap: wrap;
     background-color: #dee2e6;
     //display: inline-block;
     width: 100%;
-}
-
-/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
-.flip-card {
+  }
+  
+  /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+  .flip-card {
     background-color: transparent;
     width: 300px;
     height: 200px;
@@ -89,52 +89,52 @@
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
     border-radius: 10px; /* 5px rounded corners */
     margin: auto;
-}
-
-/* This container is needed to position the front and back side */
-.flip-card-inner {
+  }
+  
+  /* This container is needed to position the front and back side */
+  .flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-}
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
+  }
+  
+  /* Do an horizontal flip when you move the mouse over the flip box container */
+  .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
-}
-
-/* Position the front and back side */
-.flip-card-front, .flip-card-back {
+  }
+  
+  /* Position the front and back side */
+  .flip-card-front, .flip-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
-}
-
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .flip-card-front {
     background-color: rgb(180, 180, 180);
     color: black;
     border-radius: 5px; /* 5px rounded corners */
-}
-
-/* Style the back side */
-.flip-card-back {
+  }
+  
+  /* Style the back side */
+  .flip-card-back {
     background-color: rgb(160, 160, 160);
     color: rgb(0, 0, 0);
     transform: rotateY(180deg);
     border-radius: 5px; /* 5px rounded corners */
-}
-
-.child-inline-block {
+  }
+  
+  .child-inline-block {
     display: inline-block;
-}
-
-.grid-container {
+  }
+  
+  .grid-container {
     display: grid;
     grid-column-gap: 50px;
     grid-template-columns: auto auto auto;
@@ -143,43 +143,36 @@
     grid-column-gap: 10px;
     grid-row-gap: 10px;
     grid-gap: 10px;
-}
-
-.grid-item {
+  }
+  
+  .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 20px;
     font-size: 30px;
     text-align: center;
-}
-
-mat-progress-bar {
+  }
+  
+  mat-progress-bar {
   transform: rotate(-90deg);
-  margin-left: 34%;
-  margin-right: auto;
-  width: 15%;
-  height: 10px;
-  position: fixed;
-  left: 100px;
-  top: 170px;
-}
-
-mat-slider{
-  width: 300px;
-  position:absolute;
-  top: 300px;
-}
-
-//image of temp scale
-.image{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 10%;
-}
-
-//image of motor off
-.image1 {
+  width: 80%;
+  margin: auto;
+  }
+  
+  mat-slider{
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+  }
+  
+  //image of temp scale
+  .image{
+  width: 100px;
+  
+  }
+  
+  //image of motor off
+  .image1 {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
@@ -187,10 +180,10 @@ mat-slider{
   position: absolute;
   top: 70px;
   left: 10px;
-}
-
-//image of motor on
-.image2 {
+  }
+  
+  //image of motor on
+  .image2 {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
@@ -198,4 +191,5 @@ mat-slider{
   position: absolute;
   top: 70px;
   left: 200px;
-}
+  }
+  
