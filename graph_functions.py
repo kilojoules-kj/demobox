@@ -21,23 +21,25 @@ class myclass():
     def uptime(self):
         try:
             data = myobj.receive_restful(self.tag_receive)
-            data = data["Values"]["0"]{"Value"}
+            data = data["Values"]
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
         except Exception:
             print("generic error, please check")
             return
-        if data >= 200:
-            if self.counter != 1:
-                self.sensor_start  = time.time()
-                self.counter = 1
-        if self.counter == 1:
-            if data <= 200:
-                self.sensor_end = time.time()
-                self.counter = 0
-                self.sensor_uptime = self.sensor_end - self.sensor_start
-                myobj.write_restful(self.tag_send, self.sensor_uptime)
+        for x in data:
+            value = x["Value"]
+            if value >= 200:
+                if self.counter != 1:
+                    self.sensor_start  = time.time()
+                    self.counter = 1
+            if self.counter == 1:
+                if value <= 200:
+                    self.sensor_end = time.time()
+                    self.counter = 0
+                    self.sensor_uptime = self.sensor_end - self.sensor_start
+                    myobj.write_restful(self.tag_send, self.sensor_uptime)
         
     def total(self):
         t_end = None

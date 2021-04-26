@@ -7,15 +7,15 @@ import psutil
 import tkinter 
 import tkinter.tix as tix
 import tkinter.messagebox as messagebox
-import threading
-import concurrent.futures
 
 from multiprocessing import Process
+
+myobj = rest.myclass()
 
 async def on_function():
     try:
         data = myobj.receive_restful("Counter_channel0")
-        data = data["Values"]["0"]["Value"]
+        data = data["Values"][0]["Value"]
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
         return
@@ -25,12 +25,12 @@ async def on_function():
     if data > 0:
         myobj.lightcontrol("towerlight_green")
         myobj.write_restful("Motor", 1)
-        myobj.write_restful("Clear_counter1", 1)
+        myobj.write_restful("Clear_counter0", 1)
     
 async def off_function():
     try:
         data = myobj.receive_restful("Counter_channel1")
-        data = data["Values"]["0"]["Value"]
+        data = data["Values"][0]["Value"]
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
         return
@@ -40,13 +40,13 @@ async def off_function():
     if data > 0:
         myobj.lightcontrol("towerlight_amber")
         myobj.write_restful("Motor", 0)
-        myobj.write_restful("Clear_counter0", 1)        
+        myobj.write_restful("Clear_counter1", 1)        
 
 def check_loop():
     while True:
         try:
             data = myobj.receive_restful("Counter_channel0")
-            data = data["Values"]["0"]["Value"]
+            data = data["Values"][0]["Value"]
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
@@ -61,7 +61,7 @@ def check_loop():
 async def temp_error():
     try:
         data = myobj.receive_restful("temperature")
-        data = data["Values"]["0"]["Value"]
+        data = data["Values"][0]["Value"]
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
         return
@@ -80,7 +80,7 @@ async def temp_error():
 async def dist_error():
     try:
         data = myobj.receive_restful("distance_sensor")
-        data = data["Values"]["0"]["Value"]
+        data = data["Values"][0]["Value"]
     except (TypeError, json.JSONDecodeError):
         print("No or Wrong JSON data")
         return
@@ -95,19 +95,9 @@ async def dist_error():
         myobj.write_restful("Buzzer", 1)
         check_loop()
         myobj.write_restful("Buzzer", 0)
-
-def run(corofn, *args):
-    loop = asyncio.new_event_loop()
-    try:
-        coro = corofn(*args)
-        asyncio.set_event_loop(loop)
-        return loop.run_until_complete(coro)
-    finally:
-        loop.close()
+        
 
 def main():
-    myobj = rest.myclass()
-
     myobj2 = graph.myclass("s100_tag5", "uptime_green")
     myobj3 = graph.myclass("s100_tag4", "downtime_amber")
     myobj4 = graph.myclass("s100_tag2", "downtime_red")
@@ -182,9 +172,10 @@ def display():
     root.mainloop()
 
 if __name__ == "__main__":
-    P1 = Process(target=main)
-    P2 = Process(target=display)
-    P1.start()
-    P2.start()
-    P1.join()
-    P2.join()
+    main()
+    #P1 = Process(target=main)
+    #P2 = Process(target=display)
+    #P1.start()
+    #P2.start()
+    #P1.join()
+    #P2.join()

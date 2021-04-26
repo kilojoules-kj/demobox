@@ -22,7 +22,7 @@ class myclass():
         """ for x in enumerate(myclass.led_status.items()):
             print(x) """    
 
-    def receive_restful(self,name):
+    def receive_restful(self, name):
         #the body of the json
         body = json.dumps({
             "Tags":[{
@@ -38,7 +38,7 @@ class myclass():
             return
         except Exception:
             print("generic error, please check")
-            return    
+            return
         return response.json()
 
     def write_restful(self, name, value):
@@ -50,7 +50,7 @@ class myclass():
         })
 
         try:
-            response = requests.post('http://192.168.1.51/WaWebService/Json/SetTagValue/FirstProject', headers = self.header, data = body)
+            response = requests.post('http://localhost/WaWebService/Json/SetTagValue/FirstProject', headers = self.header, data = body)
         except requests.exceptions.ConnectionError:
             print("Connection Error, please check WebAccess")
             return
