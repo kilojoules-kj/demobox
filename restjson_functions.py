@@ -50,7 +50,7 @@ class myclass():
         })
 
         try:
-            response = requests.post('http://localhost/WaWebService/Json/SetTagValue/FirstProject', headers = self.header, data = body)
+            response = requests.post('http://192.168.1.51/WaWebService/Json/SetTagValue/FirstProject', headers = self.header, data = body)
         except requests.exceptions.ConnectionError:
             print("Connection Error, please check WebAccess")
             return
@@ -59,15 +59,3 @@ class myclass():
             return    
         if response == 200:
             print("Successful write REST")
-
-
-
-""" def write_file(): 
-    #write data into json file
-    with open("data_file.json", "w") as write_file:
-        json.dump(response, write_file)
-
-def read_file():
-    with open("data_file.json", "r") as read_file:
-        data = json.load(read_file)
-        print(data) """
