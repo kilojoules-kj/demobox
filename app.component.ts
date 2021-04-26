@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ApiService } from './api.service';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { analyzeAndValidateNgModules, sanitizeIdentifier } from '@angular/compiler';
+import { newArray } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-root',
@@ -37,19 +39,60 @@ export class AppComponent {
 
   ngOnInit() {
     this.myFunction;
+    this.myFunction2;
+    this.myFunction3;
   }
 
-  myFunction2 = setInterval(() => {this.somefunction(this.override_dist_value)}, 1000)
-  somefunction = (value: number) => {
+  // this is to stop further input if a error is detected
+  myFunction3 = setInterval(() => {
+    let Buzzer:any = this.getTagValue("Buzzer"); 
+    if (Buzzer == 1) {
+      console.log("stop")
+    }; 
+  }, 1000)
+
+  // this is to simulate a dist sensor error - doesnt work yet
+  myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 2000)
+  simulate_dist_error = (value: number) => {
     if (value > 600) {
-      this.setTagValue("distance_sensor", 999)
+      this.setTagValue("distance_sensor", 999);
     }
   }
 
+  // this is for getting a tag value
   myFunction = setInterval(() => {this.getTagValue("s100_tag2")}, 3000);
   JsonValues = (json:any) => {
-    let res:any = json["Values"]["0"]["Value"]  
+    let res:any = json["Values"][0]["Value"]
+    console.log(res)
     return res;
+  }
+
+  lightcontrol(tagname: string) {
+    // let map:any = new Map();
+    // map.set("towerlight_green", 0);
+    // map.set("towerlight_amber", 0);
+    // map.set("towerlight_red", 0);
+    // if (map.has(tagname)) {
+    //   map.set(tagname, 1)
+    // }
+    
+    // console.log("test")
+    // console.log(map.keys().next().value)
+    
+    this.setTagValue("towerlight_green", 0);
+    this.setTagValue("towerlight_amber", 0);
+    this.setTagValue("towerlight_red", 0);
+    this.setTagValue(tagname, 1);
+  }
+
+  on_function() {
+    this.setTagValue("Motor", 1);
+    this.lightcontrol("towerlight_green")
+  }
+
+  off_function() {
+    this.setTagValue("Motor", 0)
+    this.lightcontrol("towerlight_amber")
   }
 
   getTagValue = (tagname:string) => {
