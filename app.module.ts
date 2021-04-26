@@ -16,6 +16,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 
+//for temperature scale
+//import { MatProgressBarModule } from '@angular/material/progress-bar'
+import {MatProgressBarModule} from '@angular/material/progress-bar'
+
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TemperatureComponent } from './temperature/temperature.component';
@@ -37,6 +41,7 @@ import { TemperatureComponent } from './temperature/temperature.component';
     MatTabsModule,
     MatCardModule,
     NgbModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

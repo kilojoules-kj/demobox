@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ApiService } from './api.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,6 +27,11 @@ export class AppComponent {
   //   this._name = value;
   // }
 
+  public On:boolean = false;
+  public Off:boolean = false;
+
+  public buttonName:any = 'On';
+  
   x: any;
 
   ngOnInit() {
@@ -64,5 +70,24 @@ export class AppComponent {
       headers: {'Content-Type': 'application/json', 'Authorization': 'YWRtaW46'}
     });
     obs.subscribe((response) => console.log(response));
+  }
+  
+  toggle() {
+    this.Off = !this.Off;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    //if(this.Off)  
+      //this.buttonName = "On";
+    //else
+      //this.buttonName = "Off";
+  }
+  toggle1() {
+    this.On = !this.On;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    //if(this.On)  
+      //this.buttonName = "On";
+    //else
+      //this.buttonName = "Off";
   }
 }

@@ -1,3 +1,4 @@
+
 <div id="navbar">
   <button mat-raised-button color="primary" (click)="getTagValue('s100_tag5')">Home</button>
 </div>
@@ -17,11 +18,20 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
-      <div class="card" style="width: 25%;">
-        {{x}}
+      <div class="card" style="width: 25%;">  
+        <p>
+          <mat-button-toggle-group>
+            <mat-button-toggle (click)="toggle1()" id="bt1">
+              On
+            </mat-button-toggle>
+            <mat-button-toggle (click)="toggle()" id="bt2">
+              Off
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </p>
       </div>
       <div class="card" style="width: 25%;">
-        yes
+        {{x}}
       </div>
     </div>
   </div>
@@ -29,10 +39,23 @@
   <div class="row">
     <div class="container" style="height: max-content;">
       <div class="card" style="width: 61.5%; height: 350px;">
-        yes
+        <!--thermometer image-->
+        <img src="assets/img/thermometer.jpg" class="image">
+        <!--progress bar for temperature,need to combine it with a thermometer picture-->
+        <mat-progress-bar mode="determinate" value="getTagValue('temperature')"></mat-progress-bar>
       </div>
       <div class="card" style="width: 30%; height: 350px;">
-        yes
+        <!--to stimualte error using distance sensor-->
+        <mat-slider
+          thumbLabel
+          color="primary"
+          tickInterval="100"
+          step="1"
+          min="0"
+          max="1500"
+          aria-label="units"
+          value="setTagValue('distance_sensor')">
+        </mat-slider>
       </div>
     </div>
   </div>
@@ -51,3 +74,11 @@
     </div>
   </div>
 </div>
+
+<!--motor on off function-->
+<ng-container *ngIf="Off" id="bt2">
+  <img src="assets/img/motorOff.jpeg" class="image1">
+</ng-container>
+<ng-container *ngIf="On" id="bt1" >
+    <img src="assets/img/motorSpin.gif" class="image2">
+</ng-container>
