@@ -1,0 +1,48 @@
+<p>
+    <mat-button-toggle-group>
+      <mat-button-toggle (click)="toggle1()" id="bt1">
+        On
+      </mat-button-toggle>
+      <mat-button-toggle (click)="toggle()" id="bt2">
+        Off
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </p>
+
+<!--progress bar for temperature,need to combine it with a thermometer picture-->
+<mat-progress-bar mode="determinate" value="getTagValue('temperature')"></mat-progress-bar>
+  
+<!--to stimualte error using distance sensor-->
+<mat-slider
+  thumbLabel
+  color="primary"
+  tickInterval="100"
+  step="1"
+  min="0"
+  max="1500"
+  aria-label="units"
+  value="setTagValue('distance_sensor')">
+</mat-slider>
+
+  <!--thermometer image-->
+  <img src="assets/img/thermometer.jpg" class="image">
+
+
+<!--motor on off function-->
+<ng-container *ngIf="Off" id="bt2">
+  <img src="assets/img/motorOff.jpeg" class="image1">
+</ng-container>
+<ng-container *ngIf="On" id="bt1" >
+    <img src="assets/img/motorSpin.gif" class="image2">
+</ng-container>
+
+
+
+   
+
+
+
+
+  
+ 
+

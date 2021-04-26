@@ -1,0 +1,48 @@
+mat-progress-bar {
+  transform: rotate(-90deg);
+  margin-left: 34%;
+  margin-right: auto;
+  width: 15%;
+  height: 10px;
+  position: fixed;
+  left: 100px;
+  top: 170px;
+}
+
+mat-slider{
+  width: 300px;
+  position:absolute;
+  top: 300px;
+}
+
+//image of temp scale
+.image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+}
+
+//image of motor off
+.image1 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  position: absolute;
+  top: 70px;
+  left: 10px;
+}
+
+//image of motor on
+.image2 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  position: absolute;
+  top: 70px;
+  left: 200px;
+}
+
+
