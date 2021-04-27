@@ -12,6 +12,16 @@ from multiprocessing import Process
 
 myobj = rest.myclass()
 
+async def error_state():
+    if myobj.receive_restful("error_alert") == 1:
+        myobj.lightcontrol("towerlight_red")
+        myobj.write_restful("Motor", 0)
+        myobj.write_restful("Clear_counter0", 1)
+        myobj.write_restful("Clear_counter1", 1)
+        myobj.write_restful("Buzzer", 1)
+        check_loop()
+        myobj.write_restful("Buzzer", 0)
+
 async def on_function():
     try:
         data = myobj.receive_restful("Counter_channel0")
@@ -69,14 +79,8 @@ async def temp_error():
         print("generic error, please check")
         return
     if data > 29:
-        myobj.lightcontrol("towerlight_red")
-        myobj.write_restful("Motor", 0)
-        myobj.write_restful("Clear_counter0", 1)
-        myobj.write_restful("Clear_counter1", 1)
-        myobj.write_restful("Buzzer", 1)
-        check_loop()
-        myobj.write_restful("Buzzer", 0)
-        
+        myobj.write_restful("error_alert", 1)
+          
 async def dist_error():
     try:
         data = myobj.receive_restful("distance_sensor")
@@ -88,14 +92,7 @@ async def dist_error():
         print("generic error, please check")
         return
     if data > 600:
-        myobj.lightcontrol("towerlight_red")
-        myobj.write_restful("Motor", 0)
-        myobj.write_restful("Clear_counter0", 1)
-        myobj.write_restful("Clear_counter1", 1)
-        myobj.write_restful("Buzzer", 1)
-        check_loop()
-        myobj.write_restful("Buzzer", 0)
-        
+        myobj.write_restful("error_alert", 1)
 
 def main():
     myobj2 = graph.myclass("s100_tag5", "uptime_green")
@@ -111,7 +108,7 @@ def main():
 
     while True:
         try:
-            loop.run_until_complete(asyncio.gather(on_function(), off_function(), temp_error(), dist_error()))
+            loop.run_until_complete(asyncio.gather(on_function(), off_function(), temp_error(), dist_error(), error_state()))
         except RuntimeError:
             print("RuntimeError")
 
