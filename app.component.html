@@ -1,79 +1,159 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { asapScheduler, Observable } from "rxjs";
+import { ApiService } from './api.service';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { analyzeAndValidateNgModules, sanitizeIdentifier } from '@angular/compiler';
+import { newArray } from '@angular/compiler/src/util';
 
-<div id="navbar">
-  <button mat-raised-button color="primary" (click)="nav_button_toggle()">Home</button>
-</div>
-<div id="body">
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
 
-  <!-- This is the error popup -->
-  <div id="overlay" onclick="off()">
-    <div id="text">ERROR! Check Machine!</div>
-  </div>
+export class AppComponent {
+  // constructor(private http: HttpClient, public _name?:string) {
+    
+  // }
 
-  <p style="font-weight: bold; font-family:Arial, sans-serif; font-size:x-large;">DASHBOARD</p>
-  <div class="row">
-    <div class="container" style="height: max-content; margin-top: 20px;">
-      <div class="card" style="width: 40%; justify-content: center;">
-        <h4 style="font-size: xx-large; letter-spacing: 1px;">Motor Control</h4>
-        <p>On and Off</p>
-        <mat-button-toggle-group style="justify-content: center;">
-          <mat-button-toggle (click)="motor_toggle_on()">
-            On
-          </mat-button-toggle>
-          <mat-button-toggle (click)="motor_toggle_off()">
-            Off
-          </mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
-      <div class="card" style="width: 25%;">  
-        <ng-container *ngIf="motorOff" id="MotorOff">
-          <img src="assets/img/motorOff.jpeg" class="image1">
-        </ng-container>
-      </div>
-      <div class="card" style="width: 25%;">
-        <ng-container *ngIf="motorOn" id="MotorOn" >
-          <img src="assets/img/motorSpin.gif" class="image2">
-      </ng-container>
-      </div>
-    </div>
-  </div>
+  title="myproject";
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  // get name() {
+  //   return this._name;
+  // }
+
+  // set name(value) {
+  //   this._name = value;
+  // }
+
+
   
-  <div class="row">
-    <div class="container" style="height: max-content;">
-      <div class="card" style="width: 61.3%; height: 350px; background-color: blanchedalmond; color: #2d353c;">
-        <h4 style="font-size: xx-large; letter-spacing: 1px; margin-top: 20%;">Simulate Distance Sensor</h4>
-        <!--to stimualte error using distance sensor-->
-        <mat-slider
-          thumbLabel
-          color= "primary"
-          tickInterval="100"
-          step="1"
-          min="0"
-          max="1000"
-          aria-label="units"
-          value={{override_dist_value}}>
-        </mat-slider>
-      </div>
-      <div class="card" style="width: 30%; height: 350px; background-color: blanchedalmond; color:#2d353c; display: flex;">
-        <!--thermometer image-->
-        <!-- <img src="assets/img/thermometer.jpg" class="image"> -->
-        <!--progress bar for temperature,need to combine it with a thermometer picture-->
-        <mat-progress-bar mode="determinate" value=30></mat-progress-bar>
-      </div>
-    </div>
-  </div>
+  x: any;
+  override_dist_value!: number;
+  override_temp_value!: number;
 
-  <div class="row">
-    <div class="container" style="height: max-content;">
-      <div class="card" style="width: 30%; height: 250px;">
-        yes
-      </div>
-      <div class="card" style="width: 30%; height: 250px;">
-        yes
-      </div>
-      <div class="card" style="width: 30%; height: 250px;">
-        yes
-      </div>
-    </div>
-  </div>
-</div>
+  ngOnInit() {
+    this.myFunction;
+    // this.myFunction2;
+    // this.myFunction3;
+    //this.myFunction4;
+  }
+  
+  // this is to stop further input if a error is detected
+  // myFunction3 = setInterval(() => {
+  //   let Buzzer:any = this.getTagValue("Buzzer"); 
+  //   if (Buzzer == 1) {
+  //     console.log("stop")
+  //   }; 
+  // }, 1000)
 
+  // this is to simulate a dist sensor error - doesnt work yet
+  myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 1000)
+    simulate_dist_error = (value: number) => {
+      this.setTagValue("error_alert", value);
+  }
+
+  // this is for getting a tag value
+  myFunction = setInterval(() => {this.getTagValue("temp_alert"); }, 3000);
+  JsonValues = (json:any) => {
+    let res:any = json["Values"][0]["Value"]
+    console.log(res)
+    return res;
+  }
+
+  //to get value from temp_alert tag
+  /*temp(){
+    this.getTagValue("temp_alert");
+  }*/
+  myFunction4 = setInterval(() => {this.getTagValue("temp_alert"); }, 1000);
+
+  lightcontrol(tagname: string) {
+    // let map:any = new Map();
+    // map.set("towerlight_green", 0);
+    // map.set("towerlight_amber", 0);
+    // map.set("towerlight_red", 0);
+    // if (map.has(tagname)) {
+    //   map.set(tagname, 1)
+    // }
+    
+    // console.log("test")
+    // console.log(map.keys().next().value)
+    
+    this.setTagValue("towerlight_green", 0);
+    this.setTagValue("towerlight_amber", 0);
+    this.setTagValue("towerlight_red", 0);
+    this.setTagValue(tagname, 1);
+  }
+
+  motorOff = true;
+  motorOn = false;
+
+  motor_toggle_on() {
+    if (this.motorOn == false) {
+      this.motor_toggle()
+    }
+    this.lightcontrol("towerlight_green");
+    this.setTagValue("Motor", 1);
+  }
+
+  motor_toggle_off() {
+    if (this.motorOff == false) {
+      this.motor_toggle()
+    }
+    this.lightcontrol("towerlight_amber");
+    this.setTagValue("Motor", 0);
+  }
+  
+  motor_toggle() {
+    this.motorOn = !this.motorOn;
+    this.motorOff = !this.motorOff;
+  }
+  
+  nav_button_toggle() {
+    // do nothing yet
+  }
+
+  on_function() {
+    this.setTagValue("Motor", 1);
+    this.lightcontrol("towerlight_green")
+  }
+
+  off_function() {
+    this.setTagValue("Motor", 0)
+    this.lightcontrol("towerlight_amber")
+  }
+
+  getTagValue = (tagname:string) => {
+    let body = JSON.stringify({
+      "Tags":[{
+        "Name":tagname
+      }]
+    })
+
+    let obs = this.http.post('http://192.168.1.51/WaWebService/Json/GetTagValue/FirstProj', body, {
+      headers: {'Content-Type': 'application/json', 'Authorization': 'YWRtaW46'}
+    });
+    obs.subscribe((response) => this.x = this.JsonValues(response));
+  }
+
+  setTagValue = (tagname:string, value:number) => {
+    let body = JSON.stringify({
+      "Tags":[{
+        "Name":tagname,
+        "Value":value
+      }]
+    });
+    //console.log(body)
+    let obs = this.http.post('http://192.168.1.51/WaWebService/Json/SetTagValue/FirstProj', body, {
+      headers: {'Content-Type': 'application/json', 'Authorization': 'YWRtaW46'}
+    });
+    //obs.subscribe((response) => console.log(response));
+  }
+  
+
+}
