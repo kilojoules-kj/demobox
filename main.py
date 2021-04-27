@@ -13,7 +13,9 @@ from multiprocessing import Process
 myobj = rest.myclass()
 
 async def error_state():
-    if myobj.receive_restful("error_alert") == 1:
+    data = myobj.receive_restful("error_alert")
+    data = data["Values"][0]["Value"]
+    if data > 1:
         myobj.lightcontrol("towerlight_red")
         myobj.write_restful("Motor", 0)
         myobj.write_restful("Clear_counter0", 1)
@@ -64,6 +66,7 @@ def check_loop():
             print("generic error, please check")
             return
         if data > 0:
+            myobj.write_restful("error_alert", 0)
             return
         else:
             print("waiting")
