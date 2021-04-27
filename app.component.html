@@ -1,8 +1,14 @@
 
 <div id="navbar">
-  <button mat-raised-button color="primary" (click)="getTagValue('s100_tag5')">Home</button>
+  <button mat-raised-button color="primary" (click)="nav_button_toggle()">Home</button>
 </div>
 <div id="body">
+
+  <!-- This is the error popup -->
+  <div id="overlay" onclick="off()">
+    <div id="text">ERROR! Check Machine!</div>
+  </div>
+
   <p style="font-weight: bold; font-family:Arial, sans-serif; font-size:x-large;">DASHBOARD</p>
   <div class="row">
     <div class="container" style="height: max-content; margin-top: 20px;">
@@ -10,28 +16,23 @@
         <h4 style="font-size: xx-large; letter-spacing: 1px;">Motor Control</h4>
         <p>On and Off</p>
         <mat-button-toggle-group style="justify-content: center;">
-          <mat-button-toggle (click)="setTagValue('Motor', 1)">
+          <mat-button-toggle (click)="motor_toggle_on()">
             On
           </mat-button-toggle>
-          <mat-button-toggle (click)="setTagValue('Motor', 0)">
+          <mat-button-toggle (click)="motor_toggle_off()">
             Off
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
       <div class="card" style="width: 25%;">  
-        <p>
-          <mat-button-toggle-group>
-            <mat-button-toggle (click)="toggle1()" id="bt1">
-              On
-            </mat-button-toggle>
-            <mat-button-toggle (click)="toggle()" id="bt2">
-              Off
-            </mat-button-toggle>
-          </mat-button-toggle-group>
-        </p>
+        <ng-container *ngIf="motorOff" id="MotorOff">
+          <img src="assets/img/motorOff.jpeg" class="image1">
+        </ng-container>
       </div>
       <div class="card" style="width: 25%;">
-        <!-- {{x}} -->
+        <ng-container *ngIf="motorOn" id="MotorOn" >
+          <img src="assets/img/motorSpin.gif" class="image2">
+      </ng-container>
       </div>
     </div>
   </div>
@@ -74,14 +75,5 @@
       </div>
     </div>
   </div>
-
-  <!--motor on off function-->
-  <ng-container *ngIf="Off" id="bt2">
-    <img src="assets/img/motorOff.jpeg" class="image1">
-  </ng-container>
-  <ng-container *ngIf="On" id="bt1" >
-      <img src="assets/img/motorSpin.gif" class="image2">
-  </ng-container>
-
 </div>
 

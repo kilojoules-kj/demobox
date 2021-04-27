@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
+import { asapScheduler, Observable } from "rxjs";
 import { ApiService } from './api.service';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { analyzeAndValidateNgModules, sanitizeIdentifier } from '@angular/compiler';
@@ -28,11 +28,6 @@ export class AppComponent {
   // set name(value) {
   //   this._name = value;
   // }
-
-  public On:boolean = false;
-  public Off:boolean = false;
-
-  public buttonName:any = 'On';
   
   x: any;
   override_dist_value!: number;
@@ -60,7 +55,7 @@ export class AppComponent {
   }
 
   // this is for getting a tag value
-  myFunction = setInterval(() => {this.getTagValue("s100_tag2")}, 3000);
+  myFunction = setInterval(() => {this.getTagValue("s100_tag2"); }, 3000);
   JsonValues = (json:any) => {
     let res:any = json["Values"][0]["Value"]
     console.log(res)
@@ -83,6 +78,34 @@ export class AppComponent {
     this.setTagValue("towerlight_amber", 0);
     this.setTagValue("towerlight_red", 0);
     this.setTagValue(tagname, 1);
+  }
+
+  motorOff = true;
+  motorOn = false;
+
+  motor_toggle_on() {
+    if (this.motorOn == false) {
+      this.motor_toggle()
+    }
+    this.lightcontrol("towerlight_green");
+    this.setTagValue("Motor", 1);
+  }
+
+  motor_toggle_off() {
+    if (this.motorOff == false) {
+      this.motor_toggle()
+    }
+    this.lightcontrol("towerlight_amber");
+    this.setTagValue("Motor", 0);
+  }
+  
+  motor_toggle() {
+    this.motorOn = !this.motorOn;
+    this.motorOff = !this.motorOff;
+  }
+  
+  nav_button_toggle() {
+    // do nothing yet
   }
 
   on_function() {
@@ -122,22 +145,5 @@ export class AppComponent {
     obs.subscribe((response) => console.log(response));
   }
   
-  toggle() {
-    this.Off = !this.Off;
 
-    // CHANGE THE NAME OF THE BUTTON.
-    //if(this.Off)  
-      //this.buttonName = "On";
-    //else
-      //this.buttonName = "Off";
-  }
-  toggle1() {
-    this.On = !this.On;
-
-    // CHANGE THE NAME OF THE BUTTON.
-    //if(this.On)  
-      //this.buttonName = "On";
-    //else
-      //this.buttonName = "Off";
-  }
 }
