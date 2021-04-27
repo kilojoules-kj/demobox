@@ -22,6 +22,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar'
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+//for ngmodel slider and temp
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatCardModule,
     NgbModule,
     MatProgressBarModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
