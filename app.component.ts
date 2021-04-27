@@ -15,14 +15,16 @@ export class AppComponent {
   }
 
   x:any;
+  temp_value:any;
+  override_dist_value!: number;
 
   ngOnInit() {
     this.myFunction; // this functions grabs a tag value
-    //this.myFunction2;
+    this.myFunction2;
     this.myFunction3;
   }
 
-  // this is to stop further input if a error is detected
+  //this is to stop further input if a error is detected
   myFunction3 = setInterval(() => {
     let Buzzer:any = this.getTagValue("Buzzer"); 
     if (Buzzer == 1) {
@@ -32,15 +34,13 @@ export class AppComponent {
   }, 1000)
 
   // this is to simulate a dist sensor error - doesnt work yet
-  // myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 2000)
-  // simulate_dist_error = (value: number) => {
-  //   if (value > 600) {
-  //     this.setTagValue("distance_sensor", 999);
-  //   }
-  // }
+  myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 1000)
+    simulate_dist_error = (value: number) => {
+      this.setTagValue("error_alert", value);
+  }
 
   // this is for getting a tag value
-  myFunction = setInterval(() => {console.log(this.getTagValue("s100_tag2"))}, 3000);
+  myFunction = setInterval(() => {this.temp_value = this.getTagValue("temp_alert")}, 1000);
 
   lightcontrol(tagname: string) {
     this.setTagValue("towerlight_green", 0);
