@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { asapScheduler, Observable } from "rxjs";
-import { ApiService } from './api.service';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { analyzeAndValidateNgModules, sanitizeIdentifier } from '@angular/compiler';
-import { newArray } from '@angular/compiler/src/util';
+import { Observable, Subject } from "rxjs";
+
 
 @Component({
   selector: 'app-root',
@@ -13,28 +10,15 @@ import { newArray } from '@angular/compiler/src/util';
 })
 
 export class AppComponent {
-  // constructor(private http: HttpClient, public _name?:string) {
-    
-  // }
-
   constructor(private http: HttpClient) {
 
   }
 
-  // get name() {
-  //   return this._name;
-  // }
-
-  // set name(value) {
-  //   this._name = value;
-  // }
-  
-  x: any;
-  override_dist_value!: number;
+  x:any;
 
   ngOnInit() {
-    this.myFunction;
-    this.myFunction2;
+    this.myFunction; // this functions grabs a tag value
+    //this.myFunction2;
     this.myFunction3;
   }
 
@@ -42,25 +26,21 @@ export class AppComponent {
   myFunction3 = setInterval(() => {
     let Buzzer:any = this.getTagValue("Buzzer"); 
     if (Buzzer == 1) {
+      // error overlay
       console.log("stop")
     }; 
   }, 1000)
 
   // this is to simulate a dist sensor error - doesnt work yet
-  myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 2000)
-  simulate_dist_error = (value: number) => {
-    if (value > 600) {
-      this.setTagValue("distance_sensor", 999);
-    }
-  }
+  // myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 2000)
+  // simulate_dist_error = (value: number) => {
+  //   if (value > 600) {
+  //     this.setTagValue("distance_sensor", 999);
+  //   }
+  // }
 
   // this is for getting a tag value
-  myFunction = setInterval(() => {this.getTagValue("s100_tag2"); }, 3000);
-  JsonValues = (json:any) => {
-    let res:any = json["Values"][0]["Value"]
-    console.log(res)
-    return res;
-  }
+  myFunction = setInterval(() => {console.log(this.getTagValue("s100_tag2"))}, 3000);
 
   lightcontrol(tagname: string) {
     this.setTagValue("towerlight_green", 0);
@@ -98,6 +78,10 @@ export class AppComponent {
   }
 
   getTagValue = (tagname:string) => {
+    let JsonValues = (json:any) => {
+      let res:any = json["Values"][0]["Value"]
+      return res;
+    }
     let body = JSON.stringify({
       "Tags":[{
         "Name":tagname
@@ -107,7 +91,10 @@ export class AppComponent {
     let obs = this.http.post('http://192.168.1.51/WaWebService/Json/GetTagValue/FirstProj', body, {
       headers: {'Content-Type': 'application/json', 'Authorization': 'YWRtaW46'}
     });
-    obs.subscribe((response) => this.x = this.JsonValues(response));
+    obs.subscribe((response) => { 
+      this.x = (JsonValues(response));
+    });
+    return this.x;
   }
 
   setTagValue = (tagname:string, value:number) => {
