@@ -63,17 +63,6 @@ export class AppComponent {
   }
 
   lightcontrol(tagname: string) {
-    // let map:any = new Map();
-    // map.set("towerlight_green", 0);
-    // map.set("towerlight_amber", 0);
-    // map.set("towerlight_red", 0);
-    // if (map.has(tagname)) {
-    //   map.set(tagname, 1)
-    // }
-    
-    // console.log("test")
-    // console.log(map.keys().next().value)
-    
     this.setTagValue("towerlight_green", 0);
     this.setTagValue("towerlight_amber", 0);
     this.setTagValue("towerlight_red", 0);
@@ -108,16 +97,6 @@ export class AppComponent {
     // do nothing yet
   }
 
-  on_function() {
-    this.setTagValue("Motor", 1);
-    this.lightcontrol("towerlight_green")
-  }
-
-  off_function() {
-    this.setTagValue("Motor", 0)
-    this.lightcontrol("towerlight_amber")
-  }
-
   getTagValue = (tagname:string) => {
     let body = JSON.stringify({
       "Tags":[{
@@ -144,6 +123,4 @@ export class AppComponent {
     });
     obs.subscribe((response) => console.log(response));
   }
-  
-
 }

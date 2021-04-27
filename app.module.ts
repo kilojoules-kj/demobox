@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TestComponentComponent } from './test-component/test-component.component';
 
 // UI UX stuff from material 
 import { MatSliderModule } from '@angular/material/slider';
@@ -22,13 +21,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar'
 
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TemperatureComponent } from './temperature/temperature.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponentComponent,
-    TemperatureComponent
   ],
   imports: [
     BrowserModule,
