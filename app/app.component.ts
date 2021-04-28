@@ -35,7 +35,7 @@ export class AppComponent {
     let Buzzer:any = this.getTagValue("Buzzer"); 
     if (Buzzer == 1) {
       // error overlay
-      console.log("stop")
+      console.log("ERROR TRIGGER, STOP OPERATION!")
     }; 
   }, 1000)
 
