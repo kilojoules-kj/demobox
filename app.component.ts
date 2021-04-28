@@ -14,16 +14,19 @@ export class AppComponent {
   }
 
   x:any;
-  availability:number = 36;
   temp_value:any;
   override_dist_value!: number;
   uptime_percentage:any;
+  downtime_percentage:any;
+  errortime_percentage:any;
 
   ngOnInit() {
-    this.calculateUptime;
     this.getTempValue;
     this.simulateDistError;
     this.errorCheck;
+    this.calculateUptime;
+    this.calculateDowntime;
+    this.calculateErrortime;
   }
 
   //this pops up a page to stop further input if a error is detected
@@ -50,7 +53,19 @@ export class AppComponent {
   calculateUptime = setInterval(() => {
     let uptime_green = this.getTagValue("uptime_green");
     let uptime_total = this.getTagValue("uptime_total");
-    this.uptime_percentage = uptime_green / uptime_total;
+    this.uptime_percentage = (uptime_green / uptime_total) *100;
+  }, 1000);
+
+  calculateDowntime = setInterval(() => {
+    let uptime_amber = this.getTagValue("uptime_green");
+    let uptime_total = this.getTagValue("uptime_total");
+    this.downtime_percentage = (uptime_amber / uptime_total) *100;
+  }, 1000);
+
+  calculateErrortime = setInterval(() => {
+    let uptime_red = this.getTagValue("uptime_green");
+    let uptime_total = this.getTagValue("uptime_total");
+    this.errortime_percentage = (uptime_red / uptime_total) *100;
   }, 1000);
 
   lightcontrol(tagname: string) {
