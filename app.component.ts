@@ -12,6 +12,7 @@ export class AppComponent {
   constructor(private http: HttpClient) {
 
   }
+  title = "Angular";
 
   x:any;
   temp_value:any;
