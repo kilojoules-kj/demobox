@@ -148,8 +148,8 @@ Print the current amount of memory that is being used by the program.
 
 deprecated stuff:
 
-- *display()
+- *display()*
 This function was originally meant to create virtual buttons using tkinter but it is now deprecated after the switch to Angular.
 
 multiprocessing:
-initally, multiprocessing is required for the main loop and the virtual buttons loop to run at the same time. But it is no longer needed.
+Initally, multiprocessing is required for the main loop and the virtual buttons loop to run at the same time. But it is no longer needed.
