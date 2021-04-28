@@ -13,6 +13,7 @@ export class AppComponent {
   constructor(private http: HttpClient) {
 
   }
+  title="myproject";
 
   x:any;
   temp_value:any;
@@ -36,11 +37,13 @@ export class AppComponent {
   // this is to simulate a dist sensor error - doesnt work yet
   myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 1000)
     simulate_dist_error = (value: number) => {
-      this.setTagValue("error_alert", value);
+      if (value > 600) {
+        this.setTagValue("error_alert", 1);
+      }
   }
 
   // this is for getting a tag value
-  myFunction = setInterval(() => {this.temp_value = this.getTagValue("temp_alert")}, 1000);
+  myFunction = setInterval(() => {this.temp_value = this.getTagValue("temperature")}, 1000);
 
   lightcontrol(tagname: string) {
     this.setTagValue("towerlight_green", 0);
