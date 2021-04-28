@@ -24,18 +24,18 @@ The variable 'controlstatus' is deprecated, there is no use for it except for te
 
 The dictionary 'led_status' is to keep check of all the lights with respectively keys corresponding to the tag name set in WebAccess
 
-Memeber functions:
-- lightcontrol(self, name)
+Member functions:
+- *lightcontrol(self, name)*
 This function controls the lights by setting all values in led_status to 0, then 1 to the value of the key specified by user. It loops the size of led_status and calls the REST function to send the control signal to WebAccess. 
 To call, a string argument of 'name' must be passed, this 'name' has to be one of the key defined in led_status. Whichever 'name' is passed into the argument will be the light that is switched on.
 Usage Example: lightcontrol(self, 'towerlight_green')
 
-- receive_restful(self, name):
+- *receive_restful(self, name)*
 This function is a REST api call. POST requires a body of JSON or XML to format the response. It will return the resulting response in JSON unless there is an error.
 To call,  a string argument of 'name' must be passed, this 'name' should correspond to a tag that is set in WebAccess. 
 Usage Example: receive_restful(self, 'Counter_channel0')
 
-- write_restful(self, name, value)
+- *write_restful(self, name, value)*
 This function is a REST api call. POST requires a body of JSON or XML to format the reponse. It will set the value of the tag specified to 'value' in the argument unless there is an error.
 To call, a string argument of 'name' and a numerical argument of 'value' must be passed, this 'name' should correspond to a tag that is set in WebAccess.
 Usage Example: write_restful(self, 'Motor', 1)
@@ -54,7 +54,7 @@ It is recommended that the attributes be left untouched.
 AFter the object is created, 't_start' = time.time() is run to mark down the time that the object is created.
 
 Member functions:
-- uptime(self)
+- *uptime(self)*
 This function will read the value that is in 'tag_receive' from receive_restful and calculate the sensor uptime. 
 After it gets value from the JSON reponse, it compares value to 200, 200 is the decided sensor threshold for led On or Off, above 200 and led is on, below 200 and led is off. 
 First, it determine the start by checking that value is above 200 and self.counter == 0, if it is still 0 then self.sensor_start = time.time() and flip self.counter = 1 to mark that led has started. 
@@ -62,14 +62,14 @@ It then checks for self.counter == 1 and value < 200, once the led is off so val
 Call as usual
 Usage Example: uptime()
 
-- total(self) 
+- *total(self)*
 This function determines the total amount run time since program start and return the amount of time.
 Everytime main program runs a loop, this function is ran and 't_end' is updated.
 Calculate run time by 't_end' - 't_start'.
 Call as usual
 Usage Example: total()
 
-- datetime()
+- *datetime()*
 This function gets current date, time and format into datetime format for graphs then return it.
 It create an array 'datetime', append the time char and date char into the array and joins the char into a string. 
 Call as usual
@@ -85,14 +85,14 @@ This program is run asynchronously to allow for concurrency.
 'myobj' is an object of class 'myclass' from restjson_functions.py
 
 Functions:
-- error_state()
+- *error_state()*
 This is the function that will be triggered if a sensor value passes its safety threshold. It read value from 'error_alert' via receive_restful. 
 If value is not 0, turn towerlight to red, turn off the motor, clear the input counters, sound the buzzer and run a infinite loop, check_loop().
 Once check_loop() return and the function can continue, turn off the buzzer.
 Call as usual
 Usage Example: error_state()
 
-- on_function()
+- *on_function()*
 This function reads value from 'Counter_channel0' via receive_restful and check if value is > 0.
 Turn towerlight to green, turn on motor and clear input counter channel 0.
 Call as usual
@@ -123,7 +123,7 @@ If value < 600, set 'error_alert' to 1 via write_restful.
 Call as usual
 Usage example: temp_error()
 
-- main()
+- *main()*
 This function contains the essentials including creation of objects and asyncio loop.
 
 'myobj2' is an object of class 'myclass' from graph_functions.py
@@ -148,7 +148,7 @@ Print the current amount of memory that is being used by the program.
 
 deprecated stuff:
 
-- display()
+- *display()
 This function was originally meant to create virtual buttons using tkinter but it is now deprecated after the switch to Angular.
 
 multiprocessing:
