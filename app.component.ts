@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from "rxjs";
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,20 +12,22 @@ export class AppComponent {
   constructor(private http: HttpClient) {
 
   }
-  title="myproject";
 
   x:any;
+  availability:number = 36;
   temp_value:any;
   override_dist_value!: number;
+  uptime_percentage:any;
 
   ngOnInit() {
-    this.myFunction; // this functions grabs a tag value
-    this.myFunction2;
-    this.myFunction3;
+    this.calculateUptime;
+    this.getTempValue;
+    this.simulateDistError;
+    this.errorCheck;
   }
 
-  //this is to stop further input if a error is detected
-  myFunction3 = setInterval(() => {
+  //this pops up a page to stop further input if a error is detected
+  errorCheck = setInterval(() => {
     let Buzzer:any = this.getTagValue("Buzzer"); 
     if (Buzzer == 1) {
       // error overlay
@@ -34,16 +35,23 @@ export class AppComponent {
     }; 
   }, 1000)
 
-  // this is to simulate a dist sensor error - doesnt work yet
-  myFunction2 = setInterval(() => {this.simulate_dist_error(this.override_dist_value)}, 1000)
-    simulate_dist_error = (value: number) => {
-      if (value > 600) {
-        this.setTagValue("error_alert", 1);
-      }
+  // this is to simulate a dist sensor error
+  simulateDistError = setInterval(() => {this.setDistValue(this.override_dist_value)}, 1000)
+  setDistValue = (value: number) => {
+    if (value > 600) {
+      this.setTagValue("error_alert", 1);
+    }
   }
 
-  // this is for getting a tag value
-  myFunction = setInterval(() => {this.temp_value = this.getTagValue("temperature")}, 1000);
+  // this is for getting temp value
+  getTempValue = setInterval(() => {this.temp_value = this.getTagValue("temperature")}, 1000);
+
+  // get and calculate the percentage of time that green led is up
+  calculateUptime = setInterval(() => {
+    let uptime_green = this.getTagValue("uptime_green");
+    let uptime_total = this.getTagValue("uptime_total");
+    this.uptime_percentage = uptime_green / uptime_total;
+  }, 1000);
 
   lightcontrol(tagname: string) {
     this.setTagValue("towerlight_green", 0);
