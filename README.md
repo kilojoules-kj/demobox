@@ -1,4 +1,4 @@
-## demobox
+## DemoBox
 
 First project in internship
 Basic button control to start and stop motor
@@ -98,25 +98,25 @@ Turn towerlight to green, turn on motor and clear input counter channel 0.
 Call as usual
 Usage Example: on_function()
 
-- off_function()
+- *off_function()*
 This function reads value from 'Counter_channel1' via receive_restful and check if value is > 0.
 Turn towerlight to amber, turn off motor and clear counter channel 1.
 
-- check_loop()
+- *check_loop()*
 This function will only be triggered by another function for error checking. 
 This is a loop that run infinitely and read from 'Counter_channel0' until it detects 'Counter_channel0' > 0.
 If value > 0, set 'error_alert' to 1 via write_restful and return.
 Call as usual
 Usage Example: check_loop()
 
-- temp_error()
+- *temp_error()*
 This function reads value from 'temperature' via receive_restful and check if value > 29.
 29 is the decided threshold for the thermocouple. 
 If value > 29, set 'error_alert' to 1 via write_restful.
 Call as usual
 Usage example: temp_error()
 
-- dist_error()
+- *dist_error()*
 This function reads value from 'distance_sensor' via receive_restful and check if value < 600.
 600 is the decided threshold for the distance sensor 
 If value < 600, set 'error_alert' to 1 via write_restful.
