@@ -16,9 +16,9 @@ export class AppComponent {
   x:any;
   temp_value:any;
   override_dist_value!: number;
-  uptime_percentage:any;
-  downtime_percentage:any;
-  errortime_percentage:any;
+  uptime_percentage!:number;
+  downtime_percentage!: number;
+  errortime_percentage!:number;
 
   ngOnInit() {
     this.getTempValue;

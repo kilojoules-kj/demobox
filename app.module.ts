@@ -10,10 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // UI UX stuff from material 
 import { MatSliderModule } from '@angular/material/slider';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 //for temperature scale
 //import { MatProgressBarModule } from '@angular/material/progress-bar'
@@ -21,11 +26,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar'
 
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-//for ngmodel slider and temp
-import { FormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -43,9 +43,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCardModule,
     NgbModule,
     MatProgressBarModule,
+    MatFormFieldModule,
     FormsModule,
     MatInputModule,
-    MatFormFieldModule
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
