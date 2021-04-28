@@ -15,7 +15,7 @@ myobj = rest.myclass()
 async def error_state():
     data = myobj.receive_restful("error_alert")
     data = data["Values"][0]["Value"]
-    if data > 1:
+    if data != 0:
         myobj.lightcontrol("towerlight_red")
         myobj.write_restful("Motor", 0)
         myobj.write_restful("Clear_counter0", 1)
