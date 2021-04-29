@@ -13,7 +13,7 @@ class myclass():
     def __init__(self, tag_receive, tag_send):
         self.tag_receive = tag_receive
         self.tag_send = tag_send
-        self.counter = 0
+        self.counter = False
         self.sensor_start = None
         self.sensor_end = None
         self.sensor_uptime = None
@@ -28,27 +28,25 @@ class myclass():
         except Exception:
             print("generic error, please check")
             return
-        if data >= 200:
-            if self.counter != 1:
+        if data > 200:
+            if self.counter == False:
                 self.sensor_start  = time.time()
-                self.counter = 1
-        if self.counter == 1:
+                self.counter = True
+            self.sensor_end = time.time()
+        if self.counter == True:
+            self.sensor_uptime = self.sensor_end - self.sensor_start
             if data <= 200:
-                myobj.receive_restful(self.tag_send)
-
-                self.sensor_end = time.time()
-                self.counter = 0
-                self.sensor_uptime = self.sensor_end - self.sensor_start
-                myobj.write_restful(self.tag_send, self.sensor_uptime)
+                self.counter = False
+            data2 = myobj.receive_restful(self.tag_send)
+            data2 = data2["Values"][0]["Value"]
+            myobj.write_restful(self.tag_send, self.sensor_uptime + data2)
     
     def total(self):
         data = myobj.receive_restful("uptime_total")
-        data = data["Values"]
-        for x in data:
-            uptime_total = x["Value"]
-            t_end = None
-            t_end = time.time()
-            return((t_end-myclass.t_start)+uptime_total)
+        uptime_total = data["Values"][0]["Value"]
+        t_end = None
+        t_end = time.time()
+        return((t_end-myclass.t_start)+uptime_total)
 
     def datetime(self):
         datetime = []
