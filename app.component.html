@@ -10,12 +10,12 @@
   </div>
 
   <p style="font-weight: bold; font-family:Arial, sans-serif; font-size:x-large;">DASHBOARD</p>
-  <div class="row">
+  <div class="row w3-responsive">
     <div class="container" style="height: max-content; margin-top: 20px;">
-      <div class="card" style="width: 40%; justify-content: center;">
+      <div class="card" style="width: 400px;">
         <h4 style="font-size: xx-large; letter-spacing: 1px;">Motor Control</h4>
         <h4>On and Off</h4>
-        <mat-button-toggle-group style="justify-content: center;">
+        <mat-button-toggle-group>
           <mat-button-toggle (click)="motor_toggle_on()">
             On
           </mat-button-toggle>
@@ -24,12 +24,12 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
-      <div class="card" style="width: 25%;">  
+      <div class="card" style="width: 250px;">  
         <ng-container *ngIf="motorOff" id="MotorOff">
           <img src="assets/img/motorOff.jpeg" class="image1">
         </ng-container>
       </div>
-      <div class="card" style="width: 25%;">
+      <div class="card" style="width: 250px;">
         <ng-container *ngIf="motorOn" id="MotorOn" >
           <img src="assets/img/motorSpin.gif" class="image2">
       </ng-container>
@@ -39,7 +39,7 @@
 
   <div class="row">
     <div class="container" style="height: max-content;">
-      <div class="card" style="width: 61.3%; height: 350px; background-color: blanchedalmond; color: #2d353c;">
+      <div class="card" style="width: 613px; height: 350px; background-color: blanchedalmond; color: #2d353c;">
         <h4 style="font-size: xx-large; letter-spacing: 1px; margin-top: 20%;">Simulate Distance Sensor</h4>
         <!--to stimualte error using distance sensor-->
         <mat-slider
@@ -53,7 +53,7 @@
           [(ngModel)]="override_dist_value">
         </mat-slider>
       </div>
-      <div class="card" style="width: 30%; height: 350px; background-color: blanchedalmond; color:#2d353c; display: flex;">
+      <div class="card" style="width: 300px; height: 350px; background-color: blanchedalmond; color:#2d353c; display: flex;">
         <h4 style="font-size: x-large; letter-spacing: 1px; margin-top: 10%;">Temperature</h4>
         <!--thermometer image-->
         <!-- <img src="assets/img/thermometer.jpg" class="image"> -->
@@ -71,24 +71,24 @@
 
   <div class="row">
     <div class="container" style="height: max-content;">
-      <div class="card" style="width: 30%; height: 250px; display: flex;">
-        <div class="cardcontainer" style="margin-top: 5%;">
+      <div class="card" style="width: 300px; height: 250px; display: flex;">
+        <div class="cardcontainer">
           <h4 style="font-size: 20px; letter-spacing: 2px;">Uptime</h4>
           <mat-progress-spinner value={{uptime_percentage}} color="accent" style="margin:auto; margin-top: 10%;">
           </mat-progress-spinner>
           <h4 class="mytext">{{uptime_percentage}} %</h4>
         </div>
       </div>
-      <div class="card" style="width: 30%; height: 250px; display: flex; flex-wrap: wrap;">
-        <div class="cardcontainer" style="margin-top: 5%;">
+      <div class="card" style="width: 300px; height: 250px; display: flex; flex-wrap: wrap;">
+        <div class="cardcontainer">
           <h4 style="font-size: 20px; letter-spacing: 2px;">Downtime</h4>
           <mat-progress-spinner value={{downtime_percentage}} color="accent" style="margin:auto; margin-top: 10%;">
           </mat-progress-spinner>
           <h4 class="mytext">{{downtime_percentage}} %</h4>
         </div>
       </div>
-      <div class="card" style="width: 30%; height: 250px;">
-        <div class="cardcontainer" style="margin-top: 5%;">
+      <div class="card" style="width: 300px; height: 250px;">
+        <div class="cardcontainer">
           <h4 style="font-size: 20px; letter-spacing: 2px;">Error time</h4>
           <mat-progress-spinner value={{errortime_percentage}} color="accent" style="margin:auto; margin-top: 10%;">
           </mat-progress-spinner>
