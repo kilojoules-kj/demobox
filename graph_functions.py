@@ -9,6 +9,8 @@ class myclass():
     #sensor 3 4 amber
     #sensor 5 6 green
     t_start = time.time()
+    const_time = myobj.receive_restful("uptime_total")
+    const_time = const_time["Values"][0]["Value"]
 
     def __init__(self, tag_receive, tag_send):
         self.tag_receive = tag_receive
@@ -42,11 +44,9 @@ class myclass():
             myobj.write_restful(self.tag_send, self.sensor_uptime + data2)
     
     def total(self):
-        data = myobj.receive_restful("uptime_total")
-        uptime_total = data["Values"][0]["Value"]
         t_end = None
         t_end = time.time()
-        return((t_end-myclass.t_start)+uptime_total)
+        return((t_end-myclass.t_start)+myclass.const_time)
 
     def datetime(self):
         datetime = []
