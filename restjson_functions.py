@@ -32,7 +32,7 @@ class myclass():
 
         #make a connection with requests
         try:
-            response = requests.post('http://192.168.1.51/WaWebService/Json/GetTagValue/FirstProject', headers = self.header, data = body)
+            response = requests.post('http://localhost/WaWebService/Json/GetTagValue/FirstProject', headers = self.header, data = body)
         except requests.exceptions.ConnectionError:
             print("Connection Error, please check WebAccess")
             return
