@@ -19,6 +19,8 @@ class myclass():
         self.sensor_start = None
         self.sensor_end = None
         self.sensor_uptime = None
+        self.const_time = myobj.receive_restful(self.tag_send)
+        self.const_time = self.const_time["Values"][0]["Value"]
 
     def uptime(self):
         try:
@@ -39,9 +41,8 @@ class myclass():
             self.sensor_uptime = self.sensor_end - self.sensor_start
             if data <= 200:
                 self.counter = False
-            data2 = myobj.receive_restful(self.tag_send)
-            data2 = data2["Values"][0]["Value"]
-            myobj.write_restful(self.tag_send, self.sensor_uptime + data2)
+            
+            myobj.write_restful(self.tag_send, self.sensor_uptime + self.const_time)
     
     def total(self):
         t_end = None
