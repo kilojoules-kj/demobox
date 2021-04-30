@@ -13,9 +13,10 @@ class myclass():
     const_time = myobj.receive_restful("uptime_total")
     const_time = const_time["Values"][0]["Value"]
 
-    def __init__(self, tag_receive, tag_send):
+    def __init__(self, tag_receive, tag_send, tag_datetime = None):
         self.tag_receive = tag_receive
         self.tag_send = tag_send
+        self.tag_datetime = tag_datetime
         self.counter = False
         self.sensor_start = None
         self.sensor_end = None
@@ -47,7 +48,7 @@ class myclass():
             self.SEC = self.sensor_uptime + self.const_time
             self.MIN = math.floor(SEC/60)
             self.HR = math.floor(MIN/60)
-            myobj.write_restful("datetime_amber", myclass.datetime(self, self.SEC, self.MIN, self.HR))
+            myobj.write_restful_text(self.tag_datetime, myclass.datetime(self, self.SEC, self.MIN, self.HR))
             myobj.write_restful(self.tag_send, SEC)
 
         else:

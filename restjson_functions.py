@@ -59,3 +59,22 @@ class myclass():
             return    
         if response == 200:
             print("Successful write REST")
+
+    def write_restful_text(self, name, string):
+        body = json.dumps({
+            "Tags": [{
+                "Name":"String",
+                "Value":"String"
+            }]
+        })
+        
+        try:
+            response = requests.post('http://localhost/WaWebService/Json/SetTagValueText/FirstProject', headers = self.header, data = body)
+        except requests.exceptions.ConnectionError:
+            print("Connection Error, please check WebAccess")
+            return
+        except Exception:
+            print("generic error, please check")
+            return    
+        if response == 200:
+            print("Successful write REST")     

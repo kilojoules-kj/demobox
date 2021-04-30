@@ -106,9 +106,9 @@ async def dist_error():
         myobj.write_restful("error_alert", 1)
 
 def main():
-    myobj2 = graph.myclass("s100_tag5", "uptime_green")
-    myobj3 = graph.myclass("s100_tag4", "downtime_amber")
-    myobj4 = graph.myclass("s100_tag2", "downtime_red")
+    myobj2 = graph.myclass("s100_tag5", "uptime_green", "datetime_green")
+    myobj3 = graph.myclass("s100_tag4", "downtime_amber", "datetime_amber")
+    myobj4 = graph.myclass("s100_tag2", "downtime_red", "datetime_red")
 
     loop = asyncio.get_event_loop()
 
