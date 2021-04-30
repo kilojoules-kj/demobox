@@ -19,8 +19,8 @@ class myclass():
         self.sensor_start = None
         self.sensor_end = None
         self.sensor_uptime = None
-        self.const_time = myobj.receive_restful(self.tag_send)
-        self.const_time = self.const_time["Values"][0]["Value"]
+        self.const_time = None
+        
 
     def uptime(self):
         try:
@@ -33,11 +33,17 @@ class myclass():
             print("generic error, please check")
             return
         if data > 200:
-            self.sensor_start  = time.time()
+            if self.counter == False:
+                self.sensor_start  = time.time()
+                self.counter = True
+                self.const_time = myobj.receive_restful(self.tag_send)
+                self.const_time = self.const_time["Values"][0]["Value"]
             self.sensor_end = time.time()
             self.sensor_uptime = self.sensor_end - self.sensor_start
             myobj.write_restful(self.tag_send, self.sensor_uptime + self.const_time)
-    
+        else:
+            self.counter = False
+
     def total(self):
         t_end = None
         t_end = time.time()
