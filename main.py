@@ -74,7 +74,7 @@ def check_loop():
             return
         if data > 0:
             myobj.write_restful("error_alert", 0)
-            time.sleep(0.2)
+            time.sleep(0.3)
             return
         else:
             print("waiting for input")
