@@ -46,10 +46,10 @@ class myclass():
             self.sensor_uptime = self.sensor_end - self.sensor_start
             
             self.SEC = self.sensor_uptime + self.const_time
-            self.MIN = math.floor(SEC/60)
-            self.HR = math.floor(MIN/60)
-            myobj.write_restful_text(self.tag_datetime, myclass.datetime(self, self.SEC, self.MIN, self.HR))
-            myobj.write_restful(self.tag_send, SEC)
+            self.MIN = math.floor(self.SEC/60)
+            self.HR = math.floor(self.MIN/60)
+            myobj.write_restful_text(self.tag_datetime, myclass.datetime(self, self.SEC%60, self.MIN%60, self.HR))
+            myobj.write_restful(self.tag_send, self.SEC)
 
         else:
             self.counter = False
@@ -60,8 +60,8 @@ class myclass():
         SEC = (t_end-myclass.t_start)+myclass.const_time
         MIN = math.floor(SEC/60)
         HR = math.floor(MIN/60)
-        myobj.write_restful("SEC_total", SEC)
-        myobj.write_restful("MIN_total", MIN)
+        myobj.write_restful("SEC_total", SEC%60)
+        myobj.write_restful("MIN_total", MIN%60)
         myobj.write_restful("HR_total", HR)
         return((t_end-myclass.t_start)+myclass.const_time)
 
