@@ -44,9 +44,10 @@ class myclass():
             self.sensor_end = time.time()
             self.sensor_uptime = self.sensor_end - self.sensor_start
             
-            SEC = self.sensor_uptime + self.const_time
-            MIN = math.floor(SEC/60)
-            HR = math.floor(MIN/60)
+            self.SEC = self.sensor_uptime + self.const_time
+            self.MIN = math.floor(SEC/60)
+            self.HR = math.floor(MIN/60)
+            myobj.write_restful("datetime_amber", myclass.datetime(self, self.SEC, self.MIN, self.HR))
             myobj.write_restful(self.tag_send, SEC)
 
         else:
@@ -58,25 +59,30 @@ class myclass():
         SEC = (t_end-myclass.t_start)+myclass.const_time
         MIN = math.floor(SEC/60)
         HR = math.floor(MIN/60)
-        #myobj.write_restful("SEC", SEC)
-        #myobj.write_restful("MIN", MIN)
-        #myobj.write_restful("HR", HR)
+        myobj.write_restful("SEC_total", SEC)
+        myobj.write_restful("MIN_total", MIN)
+        myobj.write_restful("HR_total", HR)
         return((t_end-myclass.t_start)+myclass.const_time)
 
-    def datetime(self):
+    def datetime(self, seconds, minutes, hours):
         datetime = []
 
-        datetime.append(time.gmtime()[0])
-        datetime.append("-")
-        datetime.append(time.gmtime()[1])
-        datetime.append("-")
-        datetime.append(time.gmtime()[2])
-        datetime.append(" ")
-        datetime.append(time.gmtime()[3])
+        # datetime.append(time.gmtime()[0])
+        # datetime.append("-")
+        # datetime.append(time.gmtime()[1])
+        # datetime.append("-")
+        # datetime.append(time.gmtime()[2])
+        # datetime.append(" ")
+        # datetime.append(time.gmtime()[3])
+        # datetime.append(":")
+        # datetime.append(time.gmtime()[4])
+        # datetime.append(":")
+        # datetime.append(time.gmtime()[5])
+        datetime.append(hours)
         datetime.append(":")
-        datetime.append(time.gmtime()[4])
+        datetime.append(minutes)
         datetime.append(":")
-        datetime.append(time.gmtime()[5])
+        datetime.append(seconds)
         datetimeStr = "".join(map(str, datetime))
         
         return datetimeStr
