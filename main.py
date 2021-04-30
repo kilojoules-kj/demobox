@@ -7,12 +7,14 @@ import psutil
 import tkinter 
 import tkinter.tix as tix
 import tkinter.messagebox as messagebox
+import time
 
 from multiprocessing import Process
 
 myobj = rest.myclass()
 
 async def error_state():
+    t_start = time.time()
     data = myobj.receive_restful("error_alert")
     data = data["Values"][0]["Value"]
     if data != 0:
@@ -22,6 +24,10 @@ async def error_state():
         myobj.write_restful("Clear_counter1", 1)
         myobj.write_restful("Buzzer", 1)
         check_loop()
+        t_end = time.time()
+        data = myobj.receive_restful("downtime_red")
+        data = data["Values"][0]["Value"]
+        myobj.write_restful("downtime_red", (t_end-t_start)+data)
         myobj.write_restful("Buzzer", 0)
 
 async def on_function():
@@ -67,6 +73,7 @@ def check_loop():
             return
         if data > 0:
             myobj.write_restful("error_alert", 0)
+            time.sleep(0.5)
             return
         else:
             print("waiting")
