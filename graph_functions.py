@@ -1,6 +1,7 @@
 import restjson_functions as rest
 import time
 import json
+import math
 
 myobj = rest.myclass()
 
@@ -20,7 +21,9 @@ class myclass():
         self.sensor_end = None
         self.sensor_uptime = None
         self.const_time = None
-        
+        self.SEC = None
+        self.MIN = None
+        self.HR = None
 
     def uptime(self):
         try:
@@ -40,13 +43,24 @@ class myclass():
                 self.const_time = self.const_time["Values"][0]["Value"]
             self.sensor_end = time.time()
             self.sensor_uptime = self.sensor_end - self.sensor_start
-            myobj.write_restful(self.tag_send, self.sensor_uptime + self.const_time)
+            
+            SEC = self.sensor_uptime + self.const_time
+            MIN = math.floor(SEC/60)
+            HR = math.floor(MIN/60)
+            myobj.write_restful(self.tag_send, SEC)
+
         else:
             self.counter = False
 
     def total(self):
         t_end = None
         t_end = time.time()
+        SEC = (t_end-myclass.t_start)+myclass.const_time
+        MIN = math.floor(SEC/60)
+        HR = math.floor(MIN/60)
+        #myobj.write_restful("SEC", SEC)
+        #myobj.write_restful("MIN", MIN)
+        #myobj.write_restful("HR", HR)
         return((t_end-myclass.t_start)+myclass.const_time)
 
     def datetime(self):

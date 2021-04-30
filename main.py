@@ -74,10 +74,10 @@ def check_loop():
             return
         if data > 0:
             myobj.write_restful("error_alert", 0)
-            time.sleep(0.5)
+            time.sleep(0.2)
             return
         else:
-            print("waiting")
+            print("waiting for input")
         
 async def temp_error():
     try:
