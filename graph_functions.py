@@ -33,15 +33,9 @@ class myclass():
             print("generic error, please check")
             return
         if data > 200:
-            if self.counter == False:
-                self.sensor_start  = time.time()
-                self.counter = True
+            self.sensor_start  = time.time()
             self.sensor_end = time.time()
-        if self.counter == True:
             self.sensor_uptime = self.sensor_end - self.sensor_start
-            if data <= 200:
-                self.counter = False
-            
             myobj.write_restful(self.tag_send, self.sensor_uptime + self.const_time)
     
     def total(self):

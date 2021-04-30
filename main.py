@@ -25,10 +25,11 @@ async def error_state():
         myobj.write_restful("Buzzer", 1)
         check_loop()
         t_end = time.time()
+        myobj.write_restful("Buzzer", 0)
         data = myobj.receive_restful("downtime_red")
         data = data["Values"][0]["Value"]
         myobj.write_restful("downtime_red", (t_end-t_start)+data)
-        myobj.write_restful("Buzzer", 0)
+        
 
 async def on_function():
     try:
