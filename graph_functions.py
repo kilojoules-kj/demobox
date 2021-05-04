@@ -57,12 +57,10 @@ class myclass():
     def total(self):
         t_end = None
         t_end = time.time()
-        SEC = (t_end-myclass.t_start)+myclass.const_time
+        SEC = math.floor((t_end - myclass.t_start) + myclass.const_time)
         MIN = math.floor(SEC/60)
         HR = math.floor(MIN/60)
-        myobj.write_restful("SEC_total", SEC%60)
-        myobj.write_restful("MIN_total", MIN%60)
-        myobj.write_restful("HR_total", HR)
+        myobj.write_restful_text("datetime_total", myclass.datetime(self, SEC%60, MIN%60, HR))
         return((t_end-myclass.t_start)+myclass.const_time)
 
     def datetime(self, seconds, minutes, hours):
