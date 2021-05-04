@@ -40,6 +40,11 @@ This function is a REST api call. POST requires a body of JSON or XML to format 
 To call, a string argument of 'name' and a numerical argument of 'value' must be passed, this 'name' should correspond to a tag that is set in WebAccess.
 Usage Example: write_restful(self, 'Motor', 1)
 
+- *write_restful_text(self, name, string)*
+This function is a REST api call. POST requires a body of JSON or XML to format the reponse. It will set the string value of the tag specified to 'string' in the argument unless there is an error.
+To call, a string argument of 'name' and a string argument of 'string' must be passed, this 'name' should correspond to a tag that is set in WebAccess.
+Usage Example: write_restful_text(self, 'datetime', 'just a string')
+
 =========================================
 
 **graph_functions.py**:
@@ -48,8 +53,8 @@ This file contain member functions and variables related to graphing. It imports
 'myobj' is an object of class 'myclass' from restjson_functions.py
 
 Class 'myclass' contains all the member functions related to calculation of uptime and date.
-To create an object of myclass, 2 arguments must be passed, 'tag_receive' and 'tag_send'. These tags are to specify which tag to read from and write to, 'tag_receive' will read from tag and 'tag_send' will write to tag.
-When initialising an object of myclass, the object have self.tag_receive, self.tag_send and self.counter = 0 and self.sensor_start, self.sensor.end, self.sensor_uptime, all set to = None. 
+To create an object of myclass, 2 arguments must be passed, 'tag_receive' and 'tag_send'. These tags are to specify which tag to read from and write to, 'tag_receive' will read from tag, 'tag_send' will write to tag, 'tag_datetime' is optional unless provided will write string to tag.
+When initialising an object of myclass, the object have self.tag_receive, self.tag_send, self.tag_datetime, self.counter = False and self.sensor_start, self.sensor.end, self.sensor_uptime, self.const_time, self.HR, self.MIN, self.SEC set to = None. 
 It is recommended that the attributes be left untouched.
 AFter the object is created, 't_start' = time.time() is run to mark down the time that the object is created.
 
@@ -57,23 +62,26 @@ Member functions:
 - *uptime(self)*
 This function will read the value that is in 'tag_receive' from receive_restful and calculate the sensor uptime. 
 After it gets value from the JSON reponse, it compares value to 200, 200 is the decided sensor threshold for led On or Off, above 200 and led is on, below 200 and led is off. 
-First, it determine the start by checking that value is above 200 and self.counter == 0, if it is still 0 then self.sensor_start = time.time() and flip self.counter = 1 to mark that led has started. 
-It then checks for self.counter == 1 and value < 200, once the led is off so value < 200, set self.sensor.end = time.time(), calculate sensor_uptime by sensor_end - sensor_start, POST the uptime to a tag that stores it and flip the counter back to 0.
+First, it determine the start by checking that value is above 200.
+If value is above 200, check self.counter == False, set self.sensor_end, calculate self.sensor_uptime, set self.SEC = self.sensor_uptime + self.const_time, calculate self.MIN, calculate self.HR, pass SEC MIN HR into datetime(), POST results from datetime() into tag. If not <200, set self.counter = False
+If self.counter is False, set self.sensor_start, flip the self.counter to True, get self.const_time.
 Call as usual
 Usage Example: uptime()
 
 - *total(self)*
 This function determines the total amount run time since program start and return the amount of time.
 Everytime main program runs a loop, this function is ran and 't_end' is updated.
-Calculate run time by 't_end' - 't_start'.
+Calculate SEC by 't_end' - 'myclass.t_start' + myclass.const_time. Calculate MIN by SEC/60. Calculate HR by MIN/60
+Call datetime() and pass SEC, MIN, HR
+Write to 'datetime_total' and return SEC.
 Call as usual
 Usage Example: total()
 
 - *datetime()*
-This function gets current date, time and format into datetime format for graphs then return it.
+This function gets format data into datetime format for graphs then return it.
 It create an array 'datetime', append the time char and date char into the array and joins the char into a string. 
-Call as usual
-Usage Example: datetime()
+To call, 3 numerical arguments must be passed.
+Usage Example: datetime(20,20,20)
 
 ================================================
 
@@ -121,7 +129,7 @@ This function reads value from 'distance_sensor' via receive_restful and check i
 600 is the decided threshold for the distance sensor 
 If value < 600, set 'error_alert' to 1 via write_restful.
 Call as usual
-Usage example: temp_error()
+Usage example: dist_error()
 
 - *main()*
 This function contains the essentials including creation of objects and asyncio loop.
@@ -130,7 +138,7 @@ This function contains the essentials including creation of objects and asyncio 
 'myobj3' is an object of class 'myclass' from graph_functions.py
 'myobj4' is an object of class 'myclass' from graph_functions.py
 Create 3 objects for each of the towerlight colours, green, amber, red. 
-Pass the arguments for 'tag_receive' and 'tag_send' with corresponding sensor tag that would measure the led and tag that would store the values.
+Pass the arguments for 'tag_receive' corresponding sensor tag that measures the led, 'tag_send' corresponding tag to store the values., 'tag_datetime' corresponding tag to store string values.
 
 'loop' is a asyncio loop which will execute the asynchronous coroutine at once. 
 
