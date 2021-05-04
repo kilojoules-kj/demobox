@@ -63,11 +63,11 @@ class myclass():
     def write_restful_text(self, name, string):
         body = json.dumps({
             "Tags": [{
-                "Name":"String",
-                "Value":"String"
+                "Name":name,
+                "Value":string
             }]
         })
-        
+
         try:
             response = requests.post('http://localhost/WaWebService/Json/SetTagValueText/FirstProject', headers = self.header, data = body)
         except requests.exceptions.ConnectionError:

@@ -45,7 +45,7 @@ class myclass():
             self.sensor_end = time.time()
             self.sensor_uptime = self.sensor_end - self.sensor_start
             
-            self.SEC = self.sensor_uptime + self.const_time
+            self.SEC = math.floor(self.sensor_uptime + self.const_time)
             self.MIN = math.floor(self.SEC/60)
             self.HR = math.floor(self.MIN/60)
             myobj.write_restful_text(self.tag_datetime, myclass.datetime(self, self.SEC%60, self.MIN%60, self.HR))
