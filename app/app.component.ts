@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +15,9 @@ export class AppComponent {
   }
   title = "Angular";
 
-  x:any;
   temp_value:any;
+  motor_value: any;
   override_dist_value!: number;
-  test:number | undefined;
   Buzzer:any;
 
   uptime_total:any;
@@ -25,7 +25,13 @@ export class AppComponent {
   downtime_amber:any;
   downtime_red:any;
 
+  test = 0;
+  percentage_uptime = 0;
+  percentage_downtime = 0;
+  percentage_errortime = 0;
+
   ngOnInit() {
+    this.getMotorValue;
     this.getTempValue;
     this.simulateDistError;
     this.errorCheck;
@@ -63,32 +69,39 @@ export class AppComponent {
   }, 300)
 
   // this is to simulate a dist sensor error
-  simulateDistError = setInterval(() => {this.setDistValue(this.override_dist_value)}, 500)
-  setDistValue = (value: number) => {
-    if (value > 600) {
+  simulateDistError = setInterval(() => {
+    if (this.override_dist_value > 600) {
       this.setTagValue("error_alert", 1);
     }
-  }
+  }, 500)
 
   // this is for getting temp value
-  getTempValue = setInterval(() => {this.temp_value = this.getTagValue("temperature")}, 3000);
-
+  getTempValue = setInterval(() => {this.getTagValue("temperature")}, 5000);
+  
   // get and calculate the percentage of time that green led is up
   calculateUptime = setInterval(() => {
-    this.uptime_green = this.getTagValue("uptime_green");
-    this.uptime_total = this.getTagValue("uptime_total");
-  }, 7000);
+    this.getTagValue("uptime_green");
+    this.getTagValue("uptime_total");
+
+    let value:number = +this.uptime_green;
+    this.percentage_uptime = 100*value/this.uptime_total;
+  }, 2500);
 
   calculateDowntime = setInterval(() => {
-    this.downtime_amber = this.getTagValue("downtime_amber");
-    this.uptime_total = this.getTagValue("uptime_total");
-    //this.test = Number(this.downtime_amber) //(100*parseFloat(this.downtime_amber)/parseFloat(this.uptime_total))
-  }, 7000);
+    this.getTagValue("downtime_amber");
+    this.getTagValue("uptime_total");
+
+    let value:number = +this.downtime_amber;
+    this.percentage_downtime = 100*value/this.uptime_total;
+  }, 2500);
 
   calculateErrortime = setInterval(() => {
-    this.downtime_red = this.getTagValue("downtime_red");
-    this.uptime_total = this.getTagValue("uptime_total");
-  }, 7000);
+    this.getTagValue("downtime_red");
+    this.getTagValue("uptime_total");
+
+    let value:number = +this.downtime_red;
+    this.percentage_errortime = 100*value/this.uptime_total;
+  }, 2500);
 
   lightcontrol(tagname: string) {
     this.setTagValue("towerlight_green", 0);
@@ -96,6 +109,18 @@ export class AppComponent {
     this.setTagValue("towerlight_red", 0);
     this.setTagValue(tagname, 1);
   }
+
+  getMotorValue = setInterval(() => {
+    this.getTagValue("Motor")
+
+    if (this.motor_value == 1) {
+      this.motorOn = true;
+      this.motorOff = false;
+    } else {
+      this.motorOff = true;
+      this.motorOn = false;
+    }
+  }, 300);
 
   motorOff = true;
   motorOn = false;
@@ -160,7 +185,10 @@ export class AppComponent {
           break;
         case "Buzzer":
           this.Buzzer = (JsonValues(response));
-        }     
+          break;
+        case "motor":
+        this.motor_value = (JsonValues(response));
+        }
     });
   }
 
