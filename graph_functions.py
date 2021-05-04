@@ -65,22 +65,16 @@ class myclass():
 
     def datetime(self, seconds, minutes, hours):
         datetime = []
-
-        # datetime.append(time.gmtime()[0])
-        # datetime.append("-")
-        # datetime.append(time.gmtime()[1])
-        # datetime.append("-")
-        # datetime.append(time.gmtime()[2])
-        # datetime.append(" ")
-        # datetime.append(time.gmtime()[3])
-        # datetime.append(":")
-        # datetime.append(time.gmtime()[4])
-        # datetime.append(":")
-        # datetime.append(time.gmtime()[5])
+        if len(str(hours)) < 2:
+            datetime.append("0")
         datetime.append(hours)
         datetime.append(":")
+        if len(str(minutes)) < 2:
+            datetime.append("0")
         datetime.append(minutes)
         datetime.append(":")
+        if len(str(seconds)) < 2:
+            datetime.append("0")
         datetime.append(seconds)
         datetimeStr = "".join(map(str, datetime))
         

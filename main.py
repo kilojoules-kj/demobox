@@ -131,9 +131,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    #P1 = Process(target=main)
-    #P2 = Process(target=display)
-    #P1.start()
-    #P2.start()
-    #P1.join()
-    #P2.join()
