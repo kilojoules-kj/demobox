@@ -27,9 +27,9 @@ async def on_function():
     if status == True:
         t_end = time.time()
     try:
-        temp = track
-        track += t_end-t_start-temp
-        print("duration: ", math.floor(track))
+        print(track+t_end-t_start)
+        if t_end-t_start > track:
+            track = t_end-t_start
     except Exception:
         pass  
 
@@ -43,12 +43,14 @@ async def off_function():
     except Exception:
         print("generic error, please check")
         return
+    global status
     if data > 0:
-        global status
         if status == True:
             status = False
         myobj.lightcontrol("towerlight_amber")
         myobj.write_restful("4051clear_counter1", 1)
+    if status == False:
+        print(track)
 
 def main():
     loop = asyncio.get_event_loop()
