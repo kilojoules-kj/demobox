@@ -22,15 +22,16 @@ async def on_function():
         if status == False:
             status = True
             t_start = time.time()
-        t_end = time.time()
-        try:
-            track += t_end - t_start
-            print("duration: ", math.floor(track))
-        except Exception:
-            pass  
         myobj.lightcontrol("towerlight_green")
         myobj.write_restful("4051clear_counter0", 1)
-    
+    if status == True:
+        t_end = time.time()
+    try:
+        temp = track
+        track += t_end-t_start-temp
+        print("duration: ", math.floor(track))
+    except Exception:
+        pass  
 
 async def off_function():
     try:
