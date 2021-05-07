@@ -5,6 +5,7 @@ import time
 import math
 
 status = False
+track = 0
 myobj = rest.myclass()
 
 async def on_function():
@@ -17,8 +18,10 @@ async def on_function():
     except Exception:
         print("generic error, please check")
         return
+    global status
+    global t_start
+    global track
     if data > 0:
-        global status
         if status == False:
             status = True
             t_start = time.time()
@@ -26,12 +29,17 @@ async def on_function():
         myobj.write_restful("4051clear_counter0", 1)
     if status == True:
         t_end = time.time()
+    if status == False:
+        print(temp)    
     try:
+        global temp
+        temp = track+t_end-t_start
         print(track+t_end-t_start)
         if t_end-t_start > track:
             track = t_end-t_start
     except Exception:
         pass  
+
 
 async def off_function():
     try:
@@ -44,13 +52,13 @@ async def off_function():
         print("generic error, please check")
         return
     global status
+    global track
     if data > 0:
         if status == True:
             status = False
         myobj.lightcontrol("towerlight_amber")
         myobj.write_restful("4051clear_counter1", 1)
-    if status == False:
-        print(track)
+
 
 def main():
     loop = asyncio.get_event_loop()
