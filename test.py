@@ -2,10 +2,9 @@ import json
 import restjson_functions as rest
 import asyncio
 import time
+import math
 
 status = False
-t_start = None
-t_end = None
 myobj = rest.myclass()
 
 async def on_function():
@@ -20,10 +19,15 @@ async def on_function():
         return
     if data > 0:
         global status
-        global t_start
         if status == False:
             status = True
             t_start = time.time()
+        t_end = time.time()
+        try:
+            track += t_end - t_start
+            print("duration: ", math.floor(track))
+        except Exception:
+            pass  
         myobj.lightcontrol("towerlight_green")
         myobj.write_restful("4051clear_counter0", 1)
     
@@ -40,10 +44,8 @@ async def off_function():
         return
     if data > 0:
         global status
-        global t_end
         if status == True:
             status = False
-            t_end = time.time()
         myobj.lightcontrol("towerlight_amber")
         myobj.write_restful("4051clear_counter1", 1)
 
@@ -53,12 +55,6 @@ def main():
     while True:
         try:
             loop.run_until_complete(asyncio.gather(on_function(), off_function()))
-            try:
-                global t_start
-                global t_end
-                print(t_end-t_start)
-            except Exception():
-                pass
         except RuntimeError:
             print("RuntimeError")
 
