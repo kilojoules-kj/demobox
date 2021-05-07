@@ -28,15 +28,9 @@ async def on_function():
         myobj.lightcontrol("towerlight_green")
         myobj.write_restful("4051clear_counter0", 1)
     if status == True:
-        t_end = time.time()
-    if status == False:
-        print(temp)    
+        t_end = time.time()  
     try:
-        global temp
-        temp = track+t_end-t_start
         print(track+t_end-t_start)
-        if t_end-t_start > track:
-            track = t_end-t_start
     except Exception:
         pass  
 
@@ -53,9 +47,11 @@ async def off_function():
         return
     global status
     global track
+    global t_start
     if data > 0:
         if status == True:
             status = False
+            track += time.time()-t_start
         myobj.lightcontrol("towerlight_amber")
         myobj.write_restful("4051clear_counter1", 1)
 
