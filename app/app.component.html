@@ -1,0 +1,102 @@
+
+<!-- This is the error popup -->
+<div class="overlay" *ngIf="Overlay" (click)="overlay_off()">
+  <div id="text">ERROR! Check Machine!</div>
+</div>
+
+<div id="navbar">
+  <button mat-raised-button color="primary" (click)="nav_button_toggle()">QR Code</button>
+  <div class="space"></div>
+  <div class="overlay" *ngIf="nav_button" (click)="nav_button_toggle()">
+    <img src="assets/img/qrCode.png">
+  </div>
+  <a href="https://www.anewtech.net/" target="_blank">
+    <img src="assets/img/anewtechLogo.jpg" style="height: 60px;">
+  </a>
+</div>
+
+<div id="body">
+  <p style="font-weight: bold; font-family:Arial, sans-serif; font-size:x-large;">DASHBOARD</p>
+  <div class="row w3-responsive">
+    <div class="container" style="height: max-content; margin-top: 20px;">
+      <div class="card" style="width: 400px;">
+        <h4 style="font-size: xx-large; letter-spacing: 1px;">Motor Control</h4>
+        <h4>On and Off</h4>
+        <mat-button-toggle-group>
+          <mat-button-toggle (click)="motor_toggle_on()">
+            On
+          </mat-button-toggle>
+          <mat-button-toggle (click)="motor_toggle_off()">
+            Off
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="card" style="width: 250px;">  
+        <ng-container *ngIf="motorOff" id="MotorOff">
+          <img src="assets/img/motorOff.jpeg" class="image1">
+        </ng-container>
+      </div>
+      <div class="card" style="width: 250px;">
+        <ng-container *ngIf="motorOn" id="MotorOn" >
+          <img src="assets/img/motorSpin.gif" class="image2">
+      </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container" style="height: max-content;">
+      <div class="card" style="width: 613px; height: 350px; background-color: blanchedalmond; color: #2d353c;">
+        <h4 style="font-size: xx-large; letter-spacing: 1px; margin-top: 20%;">Simulate Distance Sensor</h4>
+        <!--to stimualte error using distance sensor-->
+        <mat-slider
+          thumbLabel
+          color= "primary"
+          tickInterval="100"
+          step="1"
+          min="0"
+          max="1000"
+          aria-label="units"
+          [(ngModel)]="override_dist_value">
+        </mat-slider>
+      </div>
+      <div class="card" style="width: 300px; height: 350px; background-color: blanchedalmond; color:#2d353c; display: flex;">
+        <h4 style="font-size: x-large; letter-spacing: 1px; margin-top: 10%;">Temperature</h4>
+        <!--thermometer image-->
+        <!-- <img src="assets/img/thermometer.jpg" class="image"> -->
+        <!--progress bar for temperature,need to combine it with a thermometer picture-->
+        <mat-progress-bar mode="determinate" value={{temp_value}}>></mat-progress-bar>
+        <h4 class="mytext" style="z-index: 0; font-size: 2em; font-weight: bolder; margin-left: 60px; margin-bottom: 50px;">{{temp_value}} °C</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container" style="height: max-content;">
+      <div class="card" style="width: 300px; height: 250px; display: flex; flex-wrap: wrap;">
+        <div class="cardcontainer">
+          <h4 style="font-size: 20px; letter-spacing: 2px;">Uptime</h4>
+          <mat-progress-spinner value={{percentage_uptime}} color="accent" style="margin:auto; margin-top: 5%;">
+          </mat-progress-spinner>
+          <h4 class="mytext" style="padding: 10px;">{{percentage_uptime|number:'1.2-2'}} %</h4>
+        </div>
+      </div>
+      <div class="card" style="width: 300px; height: 250px; display: flex; flex-wrap: wrap;">
+        <div class="cardcontainer">
+          <h4 style="font-size: 20px; letter-spacing: 2px;">Downtime</h4>
+          <mat-progress-spinner value={{percentage_downtime}} color="accent" style="margin:auto; margin-top: 5%;">
+          </mat-progress-spinner>
+          <h4 class="mytext" style="padding: 10px;">{{percentage_downtime|number:'1.2-2'}} %</h4>
+        </div>
+      </div>
+      <div class="card" style="width: 300px; height: 250px; display: flex; flex-wrap: wrap;">
+        <div class="cardcontainer">
+          <h4 style="font-size: 20px; letter-spacing: 2px;">Error time</h4>
+          <mat-progress-spinner value={{percentage_errortime}} color="accent" style="margin:auto; margin-top: 5%;">
+          </mat-progress-spinner>
+          <h4 class="mytext" style="padding: 10px;">{{percentage_errortime|number:'1.2-2'}} %</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
