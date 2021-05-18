@@ -23,13 +23,13 @@ async def error_state():
         myobj.write_restful("Clear_counter0", 1)
         myobj.write_restful("Clear_counter1", 1)
         myobj.write_restful("Buzzer", 1)
-        check_loop()
+        check_loop(t_start)
         t_end = time.time()
-        myobj.write_restful("Buzzer", 0)
         data = myobj.receive_restful("downtime_red")
         data = data["Values"][0]["Value"]
         myobj.write_restful("downtime_red", (t_end-t_start)+data)
-        
+        myobj.write_restful("Buzzer", 0)
+
 
 async def on_function():
     try:
@@ -61,7 +61,7 @@ async def off_function():
         myobj.write_restful("Motor", 0)
         myobj.write_restful("Clear_counter1", 1)        
 
-def check_loop():
+def check_loop(t_start):
     while True:
         try:
             data = myobj.receive_restful("Counter_channel0")
@@ -78,6 +78,10 @@ def check_loop():
             return
         else:
             print("waiting for input")
+            t_end = time.time()
+            data = myobj.receive_restful("downtime_red")
+            data = data["Values"][0]["Value"]
+            myobj.write_restful("downtime_red", (t_end-t_start)+data)
         
 async def temp_error():
     try:
