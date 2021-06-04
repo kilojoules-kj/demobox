@@ -37,22 +37,10 @@ class myclass():
             print("generic error, please check")
             return
         if data > 200:
-            if self.counter == False:
-                self.sensor_start  = time.time()
-                self.counter = True
-                self.const_time = myobj.receive_restful(self.tag_send)
-                self.const_time = self.const_time["Values"][0]["Value"]
-            self.sensor_end = time.time()
-            self.sensor_uptime = self.sensor_end - self.sensor_start
+            button_on = Buttons("uptime_green", "datetime_green")
+            button_off = Buttons("downtime_amber", "datetime_amber")
+            button_error = Buttons("downtime_red", "datetime_red")
             
-            self.SEC = math.floor(self.sensor_uptime + self.const_time)
-            self.MIN = math.floor(self.SEC/60)
-            self.HR = math.floor(self.MIN/60)
-            myobj.write_restful_text(self.tag_datetime, myclass.datetime(self, self.SEC%60, self.MIN%60, self.HR))
-            myobj.write_restful(self.tag_send, self.SEC)
-
-        else:
-            self.counter = False
 
     def total(self):
         t_end = None
@@ -79,3 +67,27 @@ class myclass():
         datetimeStr = "".join(map(str, datetime))
         
         return datetimeStr
+
+
+class Buttons:
+    def __init__(self, tag_send, tag_datetime = None):
+        self.tag_send = tag_send
+        self.tag_datetime = tag_datetime
+        # mark the start time down first
+        self.time_start = time.time()
+
+    def __del__(self):
+        # mark the end time
+        self.time_end = time.time()
+        self.time_duration = self.time_end - self.time_start
+        # print out the duration when the object is destroyed
+        print(self.time_duration)
+        data = myobj.receive_restful("downtime_red")
+        myobj.write_restful(self.tag_send, (self.time_duration)+data)
+
+        const_time = myobj.receive_restful(self.tag_send)
+        const_time = self.const_time["Values"][0]["Value"]
+        self.SEC = math.floor(self.time_duration + const_time)
+        self.MIN = math.floor(self.SEC/60)
+        self.HR = math.floor(self.MIN/60)
+        myobj.write_restful_text(self.tag_datetime, myclass.datetime(self, self.SEC%60, self.MIN%60, self.HR))

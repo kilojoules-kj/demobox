@@ -46,6 +46,7 @@ async def on_function():
         myobj.write_restful("Motor", 1)
         myobj.write_restful("Clear_counter0", 1)
     
+
 async def off_function():
     try:
         data = myobj.receive_restful("Counter_channel1")
@@ -61,11 +62,16 @@ async def off_function():
         myobj.write_restful("Motor", 0)
         myobj.write_restful("Clear_counter1", 1)        
 
+
 def check_loop(t_start):
     while True:
         try:
             data = myobj.receive_restful("Counter_channel0")
             data = data["Values"][0]["Value"]
+            t_end = time.time()
+            datatime = myobj.receive_restful("downtime_red")
+            datatime = data["Values"][0]["Value"]
+            myobj.write_restful("downtime_red", (t_end-t_start)+datatime)
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
@@ -78,10 +84,7 @@ def check_loop(t_start):
             return
         else:
             print("waiting for input")
-            t_end = time.time()
-            data = myobj.receive_restful("downtime_red")
-            data = data["Values"][0]["Value"]
-            myobj.write_restful("downtime_red", (t_end-t_start)+data)
+                    
         
 async def temp_error():
     try:
@@ -95,6 +98,7 @@ async def temp_error():
         return
     if data > 29:
         myobj.write_restful("error_alert", 1)
+      
           
 async def dist_error():
     try:
@@ -108,6 +112,7 @@ async def dist_error():
         return
     if data > 600:
         myobj.write_restful("error_alert", 1)
+
 
 def main():
     myobj2 = graph.myclass("s100_tag5", "uptime_green", "datetime_green")

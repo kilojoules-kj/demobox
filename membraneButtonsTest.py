@@ -17,6 +17,8 @@ class Buttons:
         self.time_duration = self.time_end - self.time_start
         # print out the duration when the object is destroyed
         print(self.time_duration)
+        data = myobj.receive_restful("downtime_red")
+        myobj.write_restful("downtime_red", (self.time_duration)+data)
 
 
 async def on_function():
