@@ -70,7 +70,7 @@ def check_loop(t_start):
             data = data["Values"][0]["Value"]
             t_end = time.time()
             datatime = myobj.receive_restful("downtime_red")
-            datatime = data["Values"][0]["Value"]
+            datatime = datatime["Values"][0]["Value"]
             myobj.write_restful("downtime_red", (t_end-t_start)+datatime)
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
@@ -98,8 +98,8 @@ async def temp_error():
         return
     if data > 29:
         myobj.write_restful("error_alert", 1)
-      
-          
+
+
 async def dist_error():
     try:
         data = myobj.receive_restful("distance_sensor")
