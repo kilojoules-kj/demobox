@@ -1,4 +1,6 @@
 import json
+
+from requests.api import delete
 import restjson_functions as rest
 import asyncio
 import graph_functions as graph
@@ -26,18 +28,20 @@ async def error_state():
         myobj.write_restful("Buzzer", 1)
         
         # this function loops indefinitely until the green button is pressed
-        check_loop()
+        check_loop(time.time())
         # then it return
         
         myobj.write_restful("Buzzer", 0)
 
 
-def check_loop():
+def check_loop(t_start):
     while True:
         try:
-            button_error = graph.Buttons("downtime_red", "datetime_red")  
             data = myobj.receive_restful("Counter_channel0") # push button
             data2 = myobj.receive_restful("4051counter_channel0") # membrane button
+        
+            datatime = (time.time() - t_start) + myobj.receive_restful("downtime_red")
+            myobj.write_restful("downtime_red", datatime)
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
