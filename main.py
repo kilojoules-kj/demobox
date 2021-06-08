@@ -41,7 +41,9 @@ def check_loop(t_start, static_time):
             HR = math.floor(MIN/60)
 
             myobj.write_restful("downtime_red", SEC)
-            myobj.write_restful_text("datetime_total", graph.Buttons.datetime(SEC%60, MIN%60, HR))
+            temp = graph.Buttons()
+            temp.datetime(SEC%60, MIN%60, HR)
+            myobj.write_restful_text("datetime_red", temp)
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
