@@ -36,8 +36,8 @@ def check_loop(t_start, static_time):
             data = myobj.receive_restful("Counter_channel0") # push button
             data2 = myobj.receive_restful("4051counter_channel0") # membrane button
 
-            seconds = math.floor((time.time() - t_start) + static_time)
-            minutes = math.floor(seconds/60)
+            seconds = math.floor(((time.time() - t_start) + static_time)%60)
+            minutes = math.floor((seconds/60)%60)
             hours = math.floor(minutes/60)
 
             myobj.write_restful("downtime_red", seconds)
