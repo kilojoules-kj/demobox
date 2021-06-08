@@ -71,7 +71,12 @@ class myclass():
             print("generic error, please check")
             return
         if data > 200:
-            button = Buttons(self.tag_send, self.tag_datetime)
+            if self.tag_receive == "s100_tag5":
+                button_on = Buttons(self.tag_send, self.tag_datetime)
+            if self.tag_receive == "s100_tag4":
+                button_off = Buttons(self.tag_send, self.tag_datetime)
+            if self.tag_receive == "s100_tag2":
+                button_error = Buttons(self.tag_send, self.tag_datetime)
 
     def total(self):
         t_end = None
@@ -81,5 +86,3 @@ class myclass():
         HR = math.floor(MIN/60)
         myobj.write_restful_text("datetime_total", Buttons.datetime(self, SEC%60, MIN%60, HR))
         return((t_end-myclass.t_start)+myclass.const_time)
-
-    
