@@ -36,14 +36,27 @@ def check_loop(t_start, static_time):
             data = myobj.receive_restful("Counter_channel0") # push button
             data2 = myobj.receive_restful("4051counter_channel0") # membrane button
 
-            SEC = math.floor((time.time() - t_start) + static_time)
-            MIN = math.floor(SEC/60)
-            HR = math.floor(MIN/60)
+            seconds = math.floor((time.time() - t_start) + static_time)
+            minutes = math.floor(seconds/60)
+            hours = math.floor(minutes/60)
 
-            myobj.write_restful("downtime_red", SEC)
-            temp = graph.Buttons()
-            temp.datetime(SEC%60, MIN%60, HR)
-            myobj.write_restful_text("datetime_red", temp)
+            myobj.write_restful("downtime_red", seconds)
+
+            datetime = []
+            if len(str(hours)) < 2:
+                datetime.append("0")
+            datetime.append(hours)
+            datetime.append(":")
+            if len(str(minutes)) < 2:
+                datetime.append("0")
+            datetime.append(minutes)
+            datetime.append(":")
+            if len(str(seconds)) < 2:
+                datetime.append("0")
+            datetime.append(seconds)
+            datetimeStr = "".join(map(str, datetime))
+            myobj.write_restful_text("datetime_red", datetimeStr)
+        
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
