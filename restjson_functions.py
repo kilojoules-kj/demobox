@@ -39,7 +39,12 @@ class myclass():
         except Exception:
             print("generic error, please check")
             return
-        return response.json()
+        try:
+            return(response.json()["Values"][0]["Value"])
+        except (TypeError, json.JSONDecodeError):
+            print("No or Wrong JSON data")
+        except Exception:
+            print("generic error, please check")
 
     def write_restful(self, name, value):
         body = json.dumps({
