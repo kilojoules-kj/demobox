@@ -20,6 +20,8 @@ async def error_state():
         # basic default display of error
         myobj.lightcontrol("towerlight_red")
         myobj.write_restful("Motor", 0)
+        myobj.write_restful("4051clear_counter0", 1)
+        myobj.write_restful("4051clear_counter1", 1)
         myobj.write_restful("Clear_counter0", 1)
         myobj.write_restful("Clear_counter1", 1)
         myobj.write_restful("Buzzer", 1)
@@ -32,7 +34,6 @@ async def error_state():
 
 
 def check_loop(t_start):
-    obj1 = graph.storeTime()
     while True:
         try:
             # push button
@@ -40,8 +41,7 @@ def check_loop(t_start):
             # membrane button
             data2 = myobj.receive_restful("4051counter_channel0")
 
-            t_end = time.time()
-            myobj.write_restful("downtime_red", ((t_end - obj1.getTime()) + myobj.receive_restful("downtime_red")))
+            button_off = graph.Buttons("downtime_amber", "datetime_amber")
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
@@ -110,6 +110,8 @@ def main():
     loop = asyncio.get_event_loop()
 
     myobj.write_restful("Motor", 0)
+    myobj.write_restful("4051clear_counter0", 1)
+    myobj.write_restful("4051clear_counter1", 1)
     myobj.write_restful("Clear_counter0", 1)
     myobj.write_restful("Clear_counter1", 1)
     myobj.lightcontrol("towerlight_amber")
