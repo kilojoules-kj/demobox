@@ -1,14 +1,10 @@
 import json
-
-from requests.api import delete
+import math
 import restjson_functions as rest
 import asyncio
 import graph_functions as graph
 import os
 import psutil
-import tkinter 
-import tkinter.tix as tix
-import tkinter.messagebox as messagebox
 import time
 
 from multiprocessing import Process
@@ -28,20 +24,24 @@ async def error_state():
         myobj.write_restful("Buzzer", 1)
         
         # this function loops indefinitely until the green button is pressed
-        check_loop(time.time())
+        check_loop(time.time(), myobj.receive_restful("downtime_red"))
         # then it return
         
         myobj.write_restful("Buzzer", 0)
 
 
-def check_loop(t_start):
+def check_loop(t_start, static_time):
     while True:
         try:
             data = myobj.receive_restful("Counter_channel0") # push button
             data2 = myobj.receive_restful("4051counter_channel0") # membrane button
-        
-            datatime = (time.time() - t_start) + myobj.receive_restful("downtime_red")
-            myobj.write_restful("downtime_red", datatime)
+
+            SEC = math.floor((time.time() - t_start) + static_time)
+            MIN = math.floor(SEC/60)
+            HR = math.floor(MIN/60)
+
+            myobj.write_restful("downtime_red", SEC)
+            myobj.write_restful_text("datetime_total", graph.Buttons.datetime(SEC%60, MIN%60, HR))
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
