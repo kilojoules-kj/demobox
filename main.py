@@ -107,10 +107,6 @@ async def dist_error():
 
 
 def main():
-    myobj2 = graph.myclass("s100_tag5", "uptime_green", "datetime_green")
-    myobj3 = graph.myclass("s100_tag4", "downtime_amber", "datetime_amber")
-    myobj4 = graph.myclass("s100_tag2", "downtime_red", "datetime_red")
-
     loop = asyncio.get_event_loop()
 
     myobj.write_restful("Motor", 0)
@@ -118,15 +114,13 @@ def main():
     myobj.write_restful("Clear_counter1", 1)
     myobj.lightcontrol("towerlight_amber")
 
+    myobj_total = graph.Buttons()
+
     while True:
         try:
             loop.run_until_complete(asyncio.gather(on_function(), off_function(), temp_error(), dist_error(), error_state()))
         except RuntimeError:
             print("RuntimeError")
-
-        #myobj2.uptime()
-        #myobj3.uptime()
-        #myobj4.uptime()
 
         if myobj.receive_restful("s100_tag5") > 200:
             button_on = graph.Buttons("uptime_green", "datetime_green")
@@ -134,8 +128,9 @@ def main():
             button_off = graph.Buttons("downtime_amber", "datetime_amber")
         if myobj.receive_restful("s100_tag2") > 200:
             button_error = graph.Buttons("downtime_red", "datetime_red")    
+        
+        myobj_total.total() # get total amount of time the code has been running
 
-        myobj.write_restful("uptime_total", myobj2.total())
         print("current memeory usage: ", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
 
 if __name__ == "__main__":
