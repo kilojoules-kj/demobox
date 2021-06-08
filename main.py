@@ -124,9 +124,17 @@ def main():
         except RuntimeError:
             print("RuntimeError")
 
-        myobj2.uptime()
-        myobj3.uptime()
-        myobj4.uptime()
+        #myobj2.uptime()
+        #myobj3.uptime()
+        #myobj4.uptime()
+
+        if myobj.receive_restful("s100_tag5") > 200:
+            button_on = graph.Buttons("uptime_green", "datetime_green")
+        if myobj.receive_restful("s100_tag4") > 200:
+            button_off = graph.Buttons("downtime_amber", "datetime_amber")
+        if myobj.receive_restful("s100_tag2") > 200:
+            button_error = graph.Buttons("downtime_red", "datetime_red")    
+
         myobj.write_restful("uptime_total", myobj2.total())
         print("current memeory usage: ", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
 
