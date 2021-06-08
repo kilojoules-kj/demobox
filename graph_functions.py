@@ -32,7 +32,7 @@ class Buttons:
         SEC = math.floor((t_end - self.time_start) + myobj.receive_restful("uptime_total"))
         MIN = math.floor(SEC/60)
         HR = math.floor(MIN/60)
-        myobj.write_restful("uptime_total", )
+        myobj.write_restful("uptime_total", SEC)
         myobj.write_restful_text("datetime_total", Buttons.datetime(self, SEC%60, MIN%60, HR))
 
     def datetime(self, seconds, minutes, hours):

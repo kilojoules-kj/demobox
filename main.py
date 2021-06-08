@@ -14,7 +14,6 @@ from multiprocessing import Process
 myobj = rest.myclass()
 
 async def error_state():
-    t_start = time.time()
     data = myobj.receive_restful("error_alert")
     if data != 0:
         # basic default display of error
@@ -27,21 +26,21 @@ async def error_state():
         myobj.write_restful("Buzzer", 1)
         
         # this function loops indefinitely until the green button is pressed
-        check_loop(t_start)
+        check_loop()
         # then it return
         
         myobj.write_restful("Buzzer", 0)
 
 
-def check_loop(t_start):
+def check_loop():
     while True:
         try:
+            button_off = graph.Buttons("downtime_amber", "datetime_amber")
+
             # push button
             data = myobj.receive_restful("Counter_channel0")
             # membrane button
             data2 = myobj.receive_restful("4051counter_channel0")
-
-            button_off = graph.Buttons("downtime_amber", "datetime_amber")
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
@@ -51,9 +50,11 @@ def check_loop(t_start):
         if data != 0 or data2 != 0:
             myobj.write_restful("error_alert", 0)
             time.sleep(0.3)
+            del button_off
             return
         else:
             print("waiting for input")
+            del button_off
                     
 
 async def on_function():
