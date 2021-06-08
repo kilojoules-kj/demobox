@@ -35,12 +35,9 @@ async def error_state():
 def check_loop():
     while True:
         try:
-            button_off = graph.Buttons("downtime_amber", "datetime_amber")
-
-            # push button
-            data = myobj.receive_restful("Counter_channel0")
-            # membrane button
-            data2 = myobj.receive_restful("4051counter_channel0")
+            button_error = graph.Buttons("downtime_red", "datetime_red")  
+            data = myobj.receive_restful("Counter_channel0") # push button
+            data2 = myobj.receive_restful("4051counter_channel0") # membrane button
         except (TypeError, json.JSONDecodeError):
             print("No or Wrong JSON data")
             return
@@ -50,19 +47,15 @@ def check_loop():
         if data != 0 or data2 != 0:
             myobj.write_restful("error_alert", 0)
             time.sleep(0.3)
-            del button_off
             return
         else:
             print("waiting for input")
-            del button_off
                     
 
 async def on_function():
     try:
-        # push button
-        data = myobj.receive_restful("Counter_channel0")
-        # membrane button
-        data2 = myobj.receive_restful("4051counter_channel0")
+        data = myobj.receive_restful("Counter_channel0") # push button
+        data2 = myobj.receive_restful("4051counter_channel0") # membrane button
     except Exception:
         print("generic error, please check")
         return
@@ -74,10 +67,8 @@ async def on_function():
 
 async def off_function():
     try:
-        # push button
-        data = myobj.receive_restful("Counter_channel1")
-        # membrane button
-        data2 = myobj.receive_restful("4051counter_channel1")
+        data = myobj.receive_restful("Counter_channel1") # push button
+        data2 = myobj.receive_restful("4051counter_channel1") # membrane button
     except Exception:
         print("generic error, please check")
         return
@@ -126,11 +117,9 @@ def main():
             print("RuntimeError")
 
         if myobj.receive_restful("s100_tag5") > 200:
-            button_on = graph.Buttons("uptime_green", "datetime_green")
+            button_on = graph.Buttons("uptime_green", "datetime_green") # for green
         if myobj.receive_restful("s100_tag4") > 200:
-            button_off = graph.Buttons("downtime_amber", "datetime_amber")
-        if myobj.receive_restful("s100_tag2") > 200:
-            button_error = graph.Buttons("downtime_red", "datetime_red")    
+            button_off = graph.Buttons("downtime_amber", "datetime_amber") # for amber
         
         myobj_total.total() # get total amount of time the code has been running
 

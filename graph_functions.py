@@ -22,7 +22,7 @@ class Buttons:
         self.HR = math.floor(self.MIN/60)
 
         try:
-            myobj.write_restful(self.tag_send, time_in_seconds) # update the normal time
+            myobj.write_restful(self.tag_send, self.SEC) # update the normal time
             myobj.write_restful_text(self.tag_datetime, Buttons.datetime(self, self.SEC%60, self.MIN%60, self.HR)) # update datetime
         except Exception:
             pass
