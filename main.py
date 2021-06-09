@@ -82,6 +82,7 @@ async def on_function():
         myobj.lightcontrol("towerlight_green")
         myobj.write_restful("Motor", 1)
         myobj.write_restful("Clear_counter0", 1)
+        myobj.write_restful("4051clear_counter0", 1)
     
 
 async def off_function():
@@ -94,8 +95,8 @@ async def off_function():
     if data != 0 or data2 != 0:
         myobj.lightcontrol("towerlight_amber")
         myobj.write_restful("Motor", 0)
-        myobj.write_restful("Clear_counter1", 1)        
-
+        myobj.write_restful("Clear_counter1", 1)
+        myobj.write_restful("4051clear_counter1", 1)
 
 async def temp_error():
     try:
