@@ -5,11 +5,14 @@ import math
 myobj = rest.myclass()
 
 class Buttons:
+    total_time =  myobj.receive_restful("uptime_total")
+    
     # object is created
     def __init__(self, tag_send = None, tag_datetime = None):
         self.tag_send = tag_send # this tag is for normal time in seconds
         self.tag_datetime = tag_datetime # this tag is for time converted into datetime format
         self.time_start = time.time() # mark the start time down first
+        
 
     # object is deleted
     def __del__(self):
@@ -29,7 +32,7 @@ class Buttons:
 
     def total(self):
         t_end = time.time()
-        SEC = math.floor((t_end - self.time_start) + myobj.receive_restful("uptime_total"))
+        SEC = math.floor((t_end - self.time_start) + Buttons.total_time)
         MIN = math.floor(SEC/60)
         HR = math.floor(MIN/60)
         myobj.write_restful("uptime_total", SEC)
