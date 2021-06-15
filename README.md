@@ -1,11 +1,8 @@
 ## DemoBox
 
-First project in internship
-Basic button control to start and stop motor
-Connect to advantech webaccess
-Use rest api or mqtt to retrieve and write data
-Connect thermocouple and distance sensor
-Implement a error state that trigger if thermocouple or distance sensor out of range
+Description:
+
+First project in internship. Basic button control to start and stop motor. Connect to advantech webaccess for backend. Use rest api or mqtt to retrieve and write data. Connect thermocouple and distance sensor. Implement a error state that trigger if thermocouple or distance sensor is out of range.
 
 =================================================
 
@@ -17,12 +14,10 @@ Implement a error state that trigger if thermocouple or distance sensor out of r
 **restjson_functions.py**:
 The most important file aside from main.py, this file contains the class and member functions needed to establish REST api. It imports json and requests.
 
-Class 'myclass' contains all the member functions related to REST api.
-When initialising an object of 'myclass', the object will have a default self.header that is set to authenticate for WebAccess. It is possible to modify the header to anything else.
+Class `myclass` contains all the member functions related to REST api.
+When initialising an object of `myclass`, the object will have a default `self.header` that is set to authenticate for WebAccess. It is possible to modify the header to anything else.
 
-The variable 'controlstatus' is deprecated, there is no use for it except for testing.
-
-The dictionary 'led_status' is to keep check of all the lights with respectively keys corresponding to the tag name set in WebAccess
+The dictionary `led_status` is to keep check of all the lights with respectively keys corresponding to the tag name set in WebAccess
 
 Member functions:
 - *lightcontrol(self, name)*
