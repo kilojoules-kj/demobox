@@ -2,8 +2,6 @@ import json
 import requests
 
 class myclass():
-    controlstatus = None
-
     led_status = {"towerlight_green":None, "towerlight_amber":None, "towerlight_red":None}
 
     def __init__(self):
