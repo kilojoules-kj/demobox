@@ -26,19 +26,20 @@ class Buttons:
 
         try:
             myobj.write_restful(self.tag_send, self.SEC) # update the normal time
-            myobj.write_restful_text(self.tag_datetime, Buttons.datetime(self, self.SEC%60, self.MIN%60, self.HR)) # update datetime
+            myobj.write_restful_text(self.tag_datetime, Buttons.datetime(self.SEC%60, self.MIN%60, self.HR)) # update datetime
         except Exception:
             pass
 
-    def total(self):
+    # calculate total time that the program has been up
+    def total():
         t_end = time.time()
         SEC = math.floor((t_end - self.time_start) + Buttons.total_time)
         MIN = math.floor(SEC/60)
         HR = math.floor(MIN/60)
         myobj.write_restful("uptime_total", SEC)
-        myobj.write_restful_text("datetime_total", Buttons.datetime(self, SEC%60, MIN%60, HR))
+        myobj.write_restful_text("datetime_total", Buttons.datetime(SEC%60, MIN%60, HR))
 
-    def datetime(self, seconds, minutes, hours):
+    def datetime(seconds, minutes, hours):
         datetime = []
         if len(str(hours)) < 2:
             datetime.append("0")
