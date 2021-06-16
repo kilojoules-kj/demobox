@@ -56,7 +56,7 @@ After the object is created, 'self.time_start' = time.time() is run to mark down
 When the object is deleted, it marks down the time and calculate the duration that object has been alive. Round downs the float into a whole number then divide by 60 to get minutes and divide by 60 again to get hours. Finally it will attempt to update the tags corresponding to one that uses seconds and other uses datetime format.
 
 Member functions:
-- `total()`
+- `total(self)`
 This function determines the total amount run time since program start and return the amount of time.
 Everytime main program runs a loop, this function is ran and 't_end' is updated.
 Calculate SEC by 't_end' - 'myclass.t_start' + Buttons.total_time. Calculate MIN by SEC/60. Calculate HR by MIN/60
