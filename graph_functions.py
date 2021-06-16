@@ -31,7 +31,7 @@ class Buttons:
             pass
 
     # calculate total time that the program has been up
-    def total():
+    def total(self):
         t_end = time.time()
         SEC = math.floor((t_end - self.time_start) + Buttons.total_time)
         MIN = math.floor(SEC/60)
