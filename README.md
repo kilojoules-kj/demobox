@@ -123,17 +123,12 @@ Call as usual
 Usage example: dist_error()
 
 - `main()`
-This function contains the essentials including creation of objects and asyncio loop.
-
-Run startup protocol.
+This function contains the essentials including creation of objects and asyncio loop. Run startup protocol.
 Reset both input counters to 0, make sure the motor is off and start the twoerlight at amber.
-Create a `Buttons` object for total time.
-
-Create a infinite loop and run the asyncio loop.
+Create a `Buttons` object for total time. Create a infinite loop and run the asyncio loop.
 'loop' is a asyncio loop which will execute the asynchronous coroutine at once. 
 If green or amber LED is on, their respective object will be created with the arguments for time and datetime.
 Run total()
-
 Update total run time and datetime.
 Print the current amount of memory that is being used by the program.
 
