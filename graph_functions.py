@@ -20,7 +20,7 @@ class Buttons:
         time_in_seconds = self.time_duration + myobj.receive_restful(self.tag_send) # get normal time
 
         # convert normal seconds time into bigger units of measurement
-        self.SEC = math.floor(time_in_seconds)
+        self.SEC = round(time_in_seconds)
         self.MIN = math.floor(self.SEC/60)
         self.HR = math.floor(self.MIN/60)
 
