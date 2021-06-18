@@ -143,7 +143,7 @@ def main():
         
         myobj_total.total() # get total amount of time the code has been running
 
-        time.sleep(0.5) # this is to not let time round down when the object is calculating time
+        #time.sleep(0.5) # this is to not let time round down when the object is calculating time
         print("current memeory usage: ", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
 
 if __name__ == "__main__":
