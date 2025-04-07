@@ -1,17 +1,12 @@
-## DemoBox
+# DemoBox
 
-Description:
+## Description:
 
 First project in internship. Basic button control to start and stop motor. Connect to advantech webaccess for backend. Use rest api or mqtt to retrieve and write data. Connect thermocouple and distance sensor. Implement a error state that trigger if thermocouple or distance sensor is out of range.
 
-=================================================
+### This documentation will document all the functions in the script and how the script is ran to accomplish its task. The goal is to send control signals to motor through Advantech WebAccess and do some background calculations.
 
-#This documentation will document all the functions in the script and how the script is ran to accomplish its task.
-#The goal is to send control signals to motor through Advantech WebAccess and do some background calculations.
-
-===========================================
-
-**restjson_functions.py**:
+### **restjson_functions.py**:
 The most important file aside from main.py, this file contains the class and member functions needed to establish REST api. It imports json and requests.
 
 Class `myclass` contains all the member functions related to REST api.
@@ -40,9 +35,7 @@ This function is a REST api call. POST requires a body of JSON or XML to format 
 To call, a string argument of 'name' and a string argument of 'string' must be passed, this 'name' should correspond to a tag that is set in WebAccess.
 Usage Example: write_restful_text(self, 'datetime', 'just a string')
 
-=========================================
-
-**graph_functions.py**:
+### **graph_functions.py**:
 This file contain member functions and variables related to graphing. It imports json, time and restjson_functions.
 
 `myobj` is an object of class `myclass` from restjson_functions.py
@@ -70,9 +63,8 @@ It create an array 'datetime', append the time char and date char into the array
 To call, 3 numerical arguments must be passed.
 Usage Example: datetime(20,20,20)
 
-================================================
 
-**main.py**:
+### **main.py**:
 This file contains the main functionalities of the program as well as background processes. It imports json, asyncio, os, psutil, tkinter, tkinter.tix, tkinter.messagebox and multiprocessing.
 It also import the 2 libraries that was custom made, restjson_functions and graph_functions.
 This program is run asynchronously to allow for concurrency.
@@ -132,9 +124,8 @@ Run total()
 Update total run time and datetime.
 Print the current amount of memory that is being used by the program.
 
-=========================================================================
 
-deprecated stuff:
+### deprecated stuff:
 
 - `display()`
 This function was originally meant to create virtual buttons using tkinter but it is now deprecated after the switch to Angular.
